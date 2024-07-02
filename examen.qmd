@@ -1,0 +1,15 @@
+---
+title: "Examen"
+author: "Juan Arratia"
+format: html
+editor: visual
+---
+
+# titulo
+
+texto
+
+```{r}
+
+```
+
