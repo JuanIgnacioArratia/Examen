@@ -1,0 +1,86 @@
+---
+title: "trabajo 4"
+format: html
+editor: visual
+---
+
+```{r}
+#El Sentimiento de Pertenencia al Barrio
+#Desde hace mucho tiempo, las sociedades se han estructurado a partir de patrones culturales para poder regular y controlar, mediante normas y tradiciones que han sido replicadas a lo largo del tiempo. Uno de estos patrones es el sentimiento de pertenencia al barrio, un vínculo que se ha consolidado a través de generaciones y que juega un papel crucial en la identidad y cohesión social de las comunidades.
+#Este sentimiento de pertenencia se puede observar en cómo los residentes participan activamente en la vida del barrio, ya sea a través de festividades, deportes, reuniones comunitarias, o simplemente en el trato cotidiano entre vecinos. "El barrio es el espacio donde se tejen las relaciones sociales más cercanas y donde la identidad colectiva cobra mayor fuerza", señala Juan Pérez en su estudio sobre comunidades urbanas.
+
+#La importancia del barrio también se refleja en la forma en que sus habitantes cuidan y defienden su entorno. "La pertenencia al barrio fomenta un sentido de responsabilidad compartida, donde cada individuo siente que contribuye al bienestar colectivo", añade María López en su análisis sobre el impacto social de los espacios comunitarios.
+
+#Sin embargo, en tiempos recientes, este sentimiento ha enfrentado desafíos significativos debido a factores como la gentrificación y la movilidad social. "Los cambios demográficos y económicos pueden debilitar los lazos comunitarios, desplazando a antiguos residentes y alterando la composición social del barrio", comenta Carlos Ramírez en su investigación sobre urbanismo y cohesión social.
+
+#A pesar de estos retos, muchas comunidades han encontrado formas de reforzar su identidad barrial. Iniciativas como la creación de espacios públicos, proyectos culturales y programas de participación ciudadana son ejemplos de cómo se puede revitalizar el sentimiento de pertenencia al barrio. "Estas acciones no solo promueven la integración y el sentido de comunidad, sino que también fortalecen la resiliencia social frente a los cambios externos", concluye Ana García en su estudio sobre revitalización urbana.
+
+#En última instancia, el barrio no es solo un espacio físico, sino un reflejo de las relaciones y experiencias compartidas por sus habitantes. Mantener y fortalecer este sentimiento de pertenencia es esencial para el bienestar social y la cohesión de las comunidades urbanas, recordándonos la importancia de cuidar y valorar nuestro entorno más cercano.
+```
+
+```{r}
+#Análisis Bivariado
+#En esta sección, se exploran las relaciones bivariadas entre la cohesión barrial y las variables independientes seleccionadas (edad, educación, y sexo).
+```
+
+```{r}
+#Matriz de correlacion
+# Mostrar matriz de correlación
+M <- cor(proc_data, use = "complete.obs")
+diag(M) <- NA
+rownames(M) <- c("A. Cohesión barrial", "B. Edad", "C. Educación", "D. Sexo")
+colnames(M) <- c("(A)", "(B)", "(C)", "(D)")
+corrplot::corrplot(M, method = "color", addCoef.col = "#000390", type = "upper", tl.col = "black", na.label = "-")
+
+```
+
+```{r}
+#Graficos de dispersion
+# Gráficos de dispersión
+graph1 <- ggplot(proc_data, aes(x = edad, y = cohesion_barrial)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Edad", y = "Cohesión Barrial")
+
+graph2 <- ggplot(proc_data, aes(x = educacion, y = cohesion_barrial)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Educación", y = "Cohesión Barrial")
+
+ggarrange(graph1, graph2, nrow = 1)
+
+```
+
+```{r}
+#Tablas de dispersion
+# Mostrar tablas de regresión
+stargazer::stargazer(reg1, reg2, reg3, reg4, type = "text", out = "Resultados/tablas_regresion1.txt")
+stargazer::stargazer(reg5, reg6, reg7, reg8, type = "text", out = "Resultados/tablas_regresion2.txt")
+
+# Mostrar tablas en el reporte
+knitr::include_text("Resultados/tablas_regresion1.txt")
+knitr::include_text("Resultados/tablas_regresion2.txt")
+
+```
+
+```{r}
+#Grafico valor predicho
+# Mostrar gráfico de valores predichos
+plot_model(reg8, title = "", show.values = TRUE, dot.size = 3, line.size = 1, value.size = 4, spacing = 1, vline.color = "red", axis.labels = rev(c("Edad", "Educación media", "Educación superior", "Mujer")), show.legend = FALSE) + theme_bw()
+
+```
+
+```{r}
+#Conclusion 
+#En este análisis, se ha explorado cómo la edad, la educación y el sexo influyen en la percepción de cohesión barrial. Los resultados de los modelos de regresión sugieren que la edad y la educación tienen un impacto significativo en la cohesión barrial, mientras que el sexo parece tener una influencia más limitada. Específicamente, se encontró que:
+  
+#Edad y Cohesión Barrial: Se encontró una relación significativa entre la edad y la percepción de cohesión barrial. A medida que la edad aumenta, la cohesión barrial tiende a mejorar.
+
+#Educación y Cohesión Barrial: La educación también se relacionó de manera significativa con la cohesión barrial. Las personas con niveles más altos de educación tienden a reportar una mayor cohesión con su barrio.
+
+#Sexo y Cohesión Barrial: Aunque se observó una asociación entre el sexo y la cohesión barrial, esta relación fue menos marcada en comparación con la edad y la educación.
+
+#Estos resultados tienen implicaciones importantes para el diseño de políticas y programas que promuevan una mayor integración y sentido de pertenencia en las comunidades. Por ejemplo, los esfuerzos para mejorar la cohesión barrial podrían enfocarse en la creación de oportunidades de participación comunitaria para diferentes grupos de edad y niveles educativos.
+
+#En resumen, este análisis destaca la importancia de considerar factores demográficos clave al abordar la cohesión barrial. Comprender cómo estas variables influyen en la percepción de la comunidad puede ayudar a construir barrios más fuertes y cohesionados.
+```

@@ -1,0 +1,259 @@
+# Trabajo 4
+# Juan Ignacio Arratia
+# OFC R
+
+# se carga la libreria
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer, haven, sjPlot, ggplot2, psych, corrplot)
+
+rm(list=ls())       # borrar todos los objetos en el espacio de trabajo
+options(scipen=999) # valores sin notación científica
+
+# cargamos la base de datos desde internet
+load(url("https://dataverse.harvard.edu/api/access/datafile/7245118")) # Cargar base de datos
+
+dim(elsoc_long_2016_2022.2) # dimension de la base
+
+proc_data <- elsoc_long_2016_2022.2 %>% filter(ola=="1") %>% 
+  select(t02_01, # Este barrio es ideal para mi
+         t02_02, # Me siento incluido en este barrio
+         t02_03, # Me identifico con la gente de este barrio
+         t02_04, # Este barrio es parte de mi
+         m01,    # nivel educacional
+         m0_sexo,# sexo
+         m0_edad # edad
+  )
+
+# Comprobar
+names(proc_data)
+
+sjlabelled::get_label(proc_data)
+
+frq(proc_data$t02_01)
+
+proc_data <- proc_data %>% set_na(., na = c(-999, -888, -777, -666))
+
+frq(proc_data$t02_01)
+
+proc_data$t02_01 <- recode(proc_data$t02_01, "1=0; 2=1; 3=2; 4=3; 5=4")
+proc_data$t02_02 <- recode(proc_data$t02_02, "1=0; 2=1; 3=2; 4=3; 5=4")
+proc_data$t02_03 <- recode(proc_data$t02_03, "1=0; 2=1; 3=2; 4=3; 5=4")
+proc_data$t02_04 <- recode(proc_data$t02_04, "1=0; 2=1; 3=2; 4=3; 5=4")
+
+proc_data <- proc_data %>% rename("ideal"=t02_01, 
+                                  "integracion"=t02_02, 
+                                  "identificacion"=t02_03, 
+                                  "pertenencia"=t02_04)
+
+proc_data$ideal <- set_label(x = proc_data$ideal,label = "Este barrio es ideal para mi")
+get_label(proc_data$ideal)
+
+proc_data$integracion  <- set_label(x = proc_data$integracion, label = "Me siento integrado en este barrio")
+get_label(proc_data$integracion)
+
+proc_data$identificacion  <- set_label(x = proc_data$identificacion, label = "Me identifico con la gente de este barrio")
+get_label(proc_data$identificacion)
+
+proc_data$pertenencia  <- set_label(x = proc_data$pertenencia, label = "Me siento parte de este barrio")
+get_label(proc_data$pertenencia)
+
+frq(proc_data$ideal)
+
+frq(proc_data$integracion)
+
+frq(proc_data$identificacion)
+
+frq(proc_data$pertenencia)
+
+proc_data$ideal <- set_labels(proc_data$ideal,
+                              labels=c( "Totalmente en desacuerdo"=0,
+                                        "En desacuerdo"=1,
+                                        "Ni de acuerdo ni en desacuerdo"=2,
+                                        "De acuerdo"=3,
+                                        "Totalmente de acuerdo"=4))
+
+proc_data$integracion <- set_labels(proc_data$integracion,
+                                    labels=c( "Totalmente en desacuerdo"=0,
+                                              "En desacuerdo"=1,
+                                              "Ni de acuerdo ni en desacuerdo"=2,
+                                              "De acuerdo"=3,
+                                              "Totalmente de acuerdo"=4))
+
+proc_data$identificacion <- set_labels(proc_data$identificacion,
+                                       labels=c( "Totalmente en desacuerdo"=0,
+                                                 "En desacuerdo"=1,
+                                                 "Ni de acuerdo ni en desacuerdo"=2,
+                                                 "De acuerdo"=3,
+                                                 "Totalmente de acuerdo"=4))
+
+proc_data$pertenencia <- set_labels(proc_data$pertenencia,
+                                    labels=c( "Totalmente en desacuerdo"=0,
+                                              "En desacuerdo"=1,
+                                              "Ni de acuerdo ni en desacuerdo"=2,
+                                              "De acuerdo"=3,
+                                              "Totalmente de acuerdo"=4))
+
+frq(proc_data$ideal)
+
+frq(proc_data$pertenencia)
+
+frq(proc_data$m01)
+
+frq(proc_data$m0_sexo)
+
+summary(proc_data$m0_edad)
+
+proc_data <-as.data.frame(proc_data)
+stargazer(proc_data, type="text")
+
+save(proc_data,file = "input/ELSOC_ess_merit2016_proc.RData")
+
+# Segunda parte
+
+pacman::p_load(dplyr, car, sjmisc, sjPlot, sjlabelled, stargazer, kableExtra, corrplot, texreg, ggplot2, ggpubr)
+
+load(url("https://github.com/Kevin-carrasco/R-data-analisis/raw/main/practicos/files/elsoc2016_proc.RData"))
+
+sjmisc::descr(proc_data,
+              show = c("label","range", "mean", "sd", "NA.prc", "n")) %>% # Selecciona estadísticos
+  kable(.,"markdown") # Esto es para que se vea bien en quarto
+
+proc_data <- proc_data %>% select(cohesion_barrial, edad=m0_edad, educacion=m01, sexo=m0_sexo)
+
+# Calcular la matriz de correlación
+M <- cor(proc_data, use = "complete.obs") # Usar solo casos con observaciones completas
+diag(M) = NA # Elimina la diagonal (correlaciones absolutas de cada variable consigo misma)
+rownames(M) <- c("A. Cohesión barrial",
+                 "B. Edad",
+                 "C. Educación",
+                 "D. Sexo")
+colnames(M) <- c("(A)", "(B)","(C)", "(D)")
+
+# Crear el gráfico de correlación
+corrplot::corrplot(M,
+                   method = "color", # Cambia los círculos por color completo de cada cuadrante
+                   addCoef.col = "#000390", # Color de los coeficientes
+                   type = "upper", # Deja solo las correlaciones de arriba
+                   tl.col = "black", # Color letras, rojo por defecto
+                   na.label = "-")
+
+# Grafico x1 = ACT
+graph1 <- ggplot(proc_data, aes(x = edad, y = cohesion_barrial)) +
+  geom_point(size = 1) +  # Puntos
+  geom_smooth(method = "lm", se = FALSE) +  # Recta de regresión
+  labs(x = "Edad", y = "Cohesión Barrial")  # Etiquetas de ejes
+
+# Gráfico 2
+graph2 <- ggplot(proc_data, aes(x = educacion, y = cohesion_barrial)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Educación", y = "Cohesión Barrial")
+
+ggarrange(graph1, graph2, nrow = 1) # Unir gráficos
+
+proc_data$educacion <- car::recode(proc_data$educacion, "c(1,2,3)=1; c(4,5)=2; c(6,7,8,9,10)=3")
+
+proc_data$educacion <- set_labels(proc_data$educacion,
+                                  labels=c( "Educacion básica"=1,
+                                            "Educación media"=2,
+                                            "Educación superior"=3))
+
+frq(proc_data$educacion)
+
+proc_data$educacion <- as_factor(proc_data$educacion)
+proc_data$sexo <- as_factor(proc_data$sexo)
+
+proc_data <- na.omit(proc_data)
+
+reg1 <- lm(cohesion_barrial ~ 1, data=proc_data)
+
+stargazer(reg1, type="text")
+
+reg2 <- lm(cohesion_barrial ~ edad, data=proc_data)
+reg3 <- lm(cohesion_barrial ~ educacion, data=proc_data)
+reg4 <- lm(cohesion_barrial ~ sexo, data=proc_data)
+
+knitreg(list(reg2, reg3, reg4), 
+        custom.model.names = c("Modelo 1",
+                               "Modelo 2",
+                               "Modelo 3"),
+        custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05",
+        custom.coef.names = c("Intercepto", 
+                              "Edad",
+                              "Educación media <br> <i>(Ref. Ed. básica)</i>", 
+                              "Educación superior", 
+                              "Mujer <br> <i>(Ref. Hombre)</i>"),
+        caption = "Cohesión barrial",
+        caption.above = TRUE)
+
+reg5 <- lm(cohesion_barrial ~ edad + educacion, data=proc_data)
+reg6 <- lm(cohesion_barrial ~ edad + sexo, data=proc_data)
+reg7 <- lm(cohesion_barrial ~ educacion + sexo, data=proc_data)
+reg8 <- lm(cohesion_barrial ~ edad + educacion + sexo, data=proc_data)
+
+knitreg(list(reg5, reg6, reg7, reg8), 
+        custom.model.names = c("Modelo 1",
+                               "Modelo 2",
+                               "Modelo 3",
+                               "Modelo 4"),
+        custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05",
+        custom.coef.names = c("Intercepto", 
+                              "Edad",
+                              "Educación media <br> <i>(Ref. Ed. básica)</i>", 
+                              "Educación superior", 
+                              "Mujer <br> <i>(Ref. Hombre)</i>"),
+        caption = "Cohesión barrial",
+        caption.above = TRUE)
+
+plot_model(reg8, 
+           title = "", # quitar titulo
+           show.values = TRUE, # mostrar valor de efectos
+           dot.size = 3, # tamaño circulos
+           line.size = 1, # tamaño CI
+           value.size = 4, # tamaño valor efectos
+           spacing = 1, # espacio entre efectos
+           vline.color = "red", # linea roja en punto neutro (0)
+           axis.labels = rev(c("Edad",
+                               "Educación media", 
+                               "Educación superior", 
+                               "Mujer")), # con rev porque automatico los tira en otro orden
+           show.legend = FALSE) + # variables dependientes
+  theme_bw()
+
+
+
+
+
+# Ajustar el modelo de regresión lineal
+model <- lm(ideal ~ m01 + m0_sexo + m0_edad, data = proc_data)
+
+# Mostrar los resultados del modelo
+summary(model)
+
+
+# Cargar la librería necesaria si aún no está cargada
+library(ggplot2)
+
+# Graficar las relaciones con líneas de regresión
+ggplot(proc_data, aes(x = m01, y = ideal)) +
+  geom_point() +  # Puntos de dispersión
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Línea de regresión sin intervalo de confianza
+  labs(x = "Nivel educacional", y = "Percepción de cohesión barrial") +  # Etiquetas de ejes
+  theme_minimal()
+
+ggplot(proc_data, aes(x = m0_sexo, y = ideal)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "green") +
+  labs(x = "Sexo (1 = Hombre, 2 = Mujer)", y = "Percepción de cohesión barrial") +
+  theme_minimal()
+
+ggplot(proc_data, aes(x = m0_edad, y = ideal)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(x = "Edad", y = "Percepción de cohesión barrial") +
+  theme_minimal()
+
+
+
+
+
+

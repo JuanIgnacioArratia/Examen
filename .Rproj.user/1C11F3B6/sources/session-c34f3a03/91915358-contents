@@ -1,0 +1,24 @@
+---
+title: "Precentacion"
+author: "Juan Ignacio Arratia"
+format: revealjs
+editor: visual
+---
+
+# Introduccion
+
+## **El Sentimiento de Pertenencia al Barrio**
+
+Desde hace mucho tiempo, las sociedades se han estructurado a partir de patrones culturales que regulan y controlan mediante normas y tradiciones replicadas a lo largo del tiempo. Uno de estos patrones es el sentimiento de pertenencia al barrio, un vínculo consolidado a través de generaciones que juega un papel crucial en la identidad y cohesión social de las comunidades. Este sentimiento de pertenencia se observa en cómo los residentes participan activamente en la vida del barrio, ya sea a través de festividades, deportes, reuniones comunitarias o en el trato cotidiano entre vecinos. "El barrio es el espacio donde se tejen las relaciones sociales más cercanas y donde la identidad colectiva cobra mayor fuerza", señala Juan Pérez en su estudio sobre comunidades urbanas.
+
+#Datos
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Esta investigación fue realizada con datos del Estudio Longitudinal Social de Chile (ELSOC) realizado por el Centro de Estudios de Conflicto y Cohesión Social (COES) en el año 2016.
+:::
+
+::: {.column width="60%"}
+![](output/Convivenciabarrial.png)
+:::

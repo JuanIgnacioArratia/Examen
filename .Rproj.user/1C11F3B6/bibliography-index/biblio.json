@@ -1,0 +1,132 @@
+{
+    "sources": [
+        {
+            "author": [
+                {
+                    "family": "Enriquez",
+                    "given": "Libia Rosero"
+                }
+            ],
+            "id": "enriquez2011",
+            "issued": {
+                "date-parts": [
+                    [
+                        2011,
+                        1,
+                        1
+                    ]
+                ]
+            },
+            "note": "MAG ID: 2976958009 S2ID: e0d405910d0f855af6de98f13da163b98bdb9448",
+            "title": "Cultura ciudadana: Una propuesta de convivencia",
+            "title-short": "Cultura ciudadana",
+            "type": "article-journal"
+        },
+        {
+            "author": [
+                {
+                    "family": "Bárbara Coaguila Mitta"
+                },
+                {
+                    "family": "Mitta",
+                    "given": "Barbara Coaguila"
+                },
+                {
+                    "family": "William Campos Lizarzaburu"
+                },
+                {
+                    "family": "Lizarzaburu",
+                    "given": "William B. Campos"
+                },
+                {
+                    "family": "Britaldo Campos Marín"
+                },
+                {
+                    "family": "Marín",
+                    "given": "Britaldo Campos"
+                }
+            ],
+            "id": "bárbaracoaguilamitta2018",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2018,
+                        10,
+                        23
+                    ]
+                ]
+            },
+            "note": "MAG ID: 2947294581 S2ID: 835b2fec672e7a35197751c11d0cd18df97ac3f7",
+            "page": "73-80",
+            "title": "Sentimiento de comunidad en jóvenes del distrito de moquegua, perú:",
+            "title-short": "Sentimiento de comunidad en jóvenes del distrito de moquegua, perú",
+            "type": "article-journal",
+            "volume": "9"
+        },
+        {
+            "DOI": "10.22198/rys2022/34/1509",
+            "author": [
+                {
+                    "family": "Mario Alberto Jurado Montelongo"
+                },
+                {
+                    "family": "Mario Alberto Jurado Montelongo"
+                },
+                {
+                    "family": "Camilo Contreras Delgado"
+                },
+                {
+                    "family": "Camilo Contreras Delgado"
+                },
+                {
+                    "family": "Isabel C. Sánchez Rodríguez"
+                },
+                {
+                    "family": "Isabel C. Sánchez Rodríguez"
+                },
+                {
+                    "family": "Gustavo Adolfo Vázquez Martínez"
+                },
+                {
+                    "family": "Gustavo Adolfo Vázquez Martínez"
+                }
+            ],
+            "container-title": "Región y sociedad",
+            "id": "marioalbertojuradomontelongo",
+            "note": "DOI: 10.22198/rys2022/34/1509 MAG ID: 4283076469 S2ID: 32fa22f48af721e50e8f067263944d75574f9006",
+            "title": "Cohesión barrial en monterrey. Interacciones socioterritoriales en las colonias sarabia, treviño, terminal y obrerista",
+            "type": "article-journal"
+        },
+        {
+            "author": [
+                {
+                    "family": "Morales Fonseca"
+                },
+                {
+                    "family": "Fonseca",
+                    "given": "Morales"
+                },
+                {
+                    "family": "Juan Sebastián"
+                },
+                {
+                    "family": "Sebastian",
+                    "given": "Juan"
+                }
+            ],
+            "id": "moralesfonseca2020",
+            "issued": {
+                "date-parts": [
+                    [
+                        2020
+                    ]
+                ]
+            },
+            "note": "MAG ID: 3085880702 S2ID: 6c79f293c0c364edf6a31638b71fd5dcc0fa12b4",
+            "title": "Recuperación de espacios urbanos residuales generando una cohesión urbana/barrial, sentido de lugar y espacio público comunitario y de calidad",
+            "type": "article-journal"
+        }
+    ],
+    "project_biblios": []
+}

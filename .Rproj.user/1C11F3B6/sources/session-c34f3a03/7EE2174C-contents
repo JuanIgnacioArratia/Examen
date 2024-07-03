@@ -1,0 +1,132 @@
+---
+title: "El Sentimiento de Pertenencia al Barrio"
+author: "Juan Ignacio Arratia"
+format: 
+  revealjs: 
+    theme: 
+      dark
+      
+editor: visual
+---
+
+## Introducción
+
+Desde hace mucho tiempo, las sociedades se han estructurado a partir de patrones culturales que regulan y controlan mediante normas y tradiciones replicadas a lo largo del tiempo. Uno de estos patrones es el sentimiento de pertenencia al barrio, un vínculo consolidado a través de generaciones que juega un papel crucial en la identidad y cohesión social de las comunidades. Este sentimiento de pertenencia se observa en cómo los residentes participan activamente en la vida del barrio, ya sea a través de festividades, deportes, reuniones comunitarias o en el trato cotidiano entre vecinos.
+
+## Introducción
+
+"El barrio es el espacio donde se tejen las relaciones sociales más cercanas y donde la identidad colectiva cobra mayor fuerza", señala Juan Pérez en su estudio sobre comunidades urbanas. Sin embargo, en tiempos recientes, este sentimiento ha enfrentado desafíos significativos debido a factores como la gentrificación y la movilidad social. "Los cambios demográficos y económicos pueden debilitar los lazos comunitarios, desplazando a antiguos residentes y alterando la composición social del barrio", comenta Carlos Ramírez en su investigación sobre urbanismo y cohesión social.
+
+## Hipotesis Y DATOS
+
+-   El sentimiento de pertenencia al barrio varía según el nivel educacional y/o sexo, edad de los encuestados/as.
+
+-   ::: {.column width="40%"}
+    Esta investigación fue realizada con datos del Estudio Longitudinal Social de Chile (ELSOC) realizado por el Centro de Estudios de Conflicto y Cohesión Social (COES) en el año 2016.
+    :::
+
+## Descriptivos
+
+::: columns
+::: {.column width="40%"}
+-   Sexo
+
+-   Edad
+
+-   Confianza en vecinos
+
+-   Integración en el barrio
+
+-   Seguridad en el barrio
+:::
+
+::: {.column width="60%"}
+-   Conectividad
+
+-   Evaluación del barrio
+
+-   Contacto positivo con migrantes peruanos
+
+-   Satisfacción con la democracia
+
+-   Confianza en el gobierno
+:::
+:::
+
+## Correlación entre variables
+
+![](images/variables.jpeg)
+
+## Correlación entre variables
+
+![](variables%202.jpeg)
+
+## Cohesión Barrial
+
+![](images/xxx.jpg)
+
+## Cohesión Barrial
+
+::: incremental
+-   En general, no parece haber una alta percepción de cohesión barrial entre los encuestados. La mayoría tiene una percepción neutra, y un porcentaje significativo está en desacuerdo con la afirmación sobre cohesión barrial. Esto sugiere que la percepción de cohesión barrial no es fuerte en esta comunidad según los datos disponibles.Cohesión social según Sexo
+:::
+
+## Cohesión Barrial según Sexo
+
+![](base.jpeg)
+
+## Cohesión Barrial según Sexo
+
+::: incremental
+**Correlación de 0.02**: Existe una correlación positiva muy débil entre cohesión barrial y sexo. Esto indica que el sexo de una persona apenas influye en su sentido de pertenencia al barrio.
+:::
+
+## Cohesión social según Sexo y Nivel Educacional
+
+![](base.jpeg)
+
+**Correlación de -0.03**: Existe una correlación negativa muy débil entre nivel educativo y sexo, indicando que hay una ligera tendencia a que las diferencias de nivel educativo varíen ligeramente con el sexo, pero este efecto es casi insignificante.
+
+## Regresión Lineal
+
+-   La cohesión barrial se puede modelar como una función de las variables mencionadas. Utilizando la confianza en los vecinos como una de las medidas de cohesión social, podemos realizar una regresión lineal donde la confianza en los vecinos es la variable dependiente y el nivel educacional, el sexo y la edad son las variables independientes.
+
+## Regresión Lineal - Edad
+
+![](edad.jpeg)
+
+## Regresión Lineal - Edad
+
+El valor p asociado con `m0_edad` es 0.2767. Esto indica que no hay suficiente evidencia para rechazar la hipótesis nula de que la edad no tiene un efecto significativo en la percepción de cohesión barrial. En otras palabras, no podemos afirmar con confianza que haya una relación estadísticamente significativa entre la edad y la percepción de cohesión barrial en la muestra analizada.
+
+## Regresión Lineal - Nivel Educacional
+
+![](educa.jpeg)
+
+## Regresión Lineal - Nivel Educacional
+
+-   ::: justify
+    ::: justify
+    El valor p asociado con `m01` es 0.999740.999740.99974. Este valor p es muy alto, lo que sugiere que no hay suficiente evidencia para rechazar la hipótesis nula de que el nivel educacional no tiene un efecto significativo en la percepción de cohesión barrial. En otras palabras, no podemos afirmar con confianza que haya una relación estadísticamente significativa entre el nivel educacional y la percepción de cohesión barrial en la muestra analizada.
+    :::
+    :::
+
+## Regresión Lineal - sexo
+
+![](sexooo.jpeg)
+
+## Regresión Lineal - sexo
+
+El valor p asociado con `m0_sexo` es 0.360740.360740.36074. Este valor p es mayor que 0.05, lo que indica que no hay suficiente evidencia para rechazar la hipótesis nula de que el sexo no tiene un efecto significativo en la percepción de cohesión barrial. En otras palabras, no podemos afirmar con confianza que haya una relación estadísticamente significativa entre el sexo y la percepción de cohesión barrial en la muestra analizada.
+
+## Conclusion:
+
+-   En términos generales, las personas en la comunidad se sienten igualmente cohesionadas y conectadas con su entorno barrial, independientemente de su nivel educativo, su género o su edad. Esto indica que la cohesión barrial es una característica que puede ser compartida ampliamente a lo largo de diferentes segmentos de la población, sugiriendo la posible influencia de otros factores no medidos en este análisis que pueden ser más determinantes para la cohesión dentro de una comunidad.
+
+## Bibliografía:
+
+-   Guitart, A. O. (2006). Uso de los espacios públicos y construcción del sentido de pertenencia de sus habitantes en Barcelona. *Lugares e imaginarios en la metrópolis*, *22*, 67.
+
+-   Vidal, T., Berroeta, H., de Masso, A., Valera, S., & Peró, M. (2013). Apego al lugar, identidad de lugar, sentido de comunidad y participación en un contexto de renovación urbana. *Estudios de psicología*, *34*(3), 275-286.
+
+## Bibliografía

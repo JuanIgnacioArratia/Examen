@@ -1,0 +1,28 @@
+#Prueba 1 
+#Juan Arratia
+#Estadistica III
+
+#se carga la libreria
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer, haven, sjPlot, ggplot2, psych)
+
+rm(list=ls())       # borrar todos los objetos en el espacio de trabajo
+options(scipen=999) # valores sin notación científica
+
+
+# Se instala el paquete
+install.packages("AER")
+
+
+library(dplyr) # Para ver la tabla
+library(AER) # Recuerda instalar la librería
+data("CollegeDistance") # Genera los datos
+glimpse(CollegeDistance)
+
+
+# Generar una tabla de estadísticos descriptivos
+summary(CollegeDistance %>% select(distance, education, gender, ethnicity, fcollege, mcollege, wage, region))
+
+
+model <- lm(education ~ distance, data = CollegeDistance)
+summary(model)
+
