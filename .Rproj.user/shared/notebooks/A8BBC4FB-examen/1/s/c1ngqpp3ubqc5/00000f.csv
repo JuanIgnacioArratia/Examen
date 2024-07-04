@@ -1,0 +1,22 @@
+"0","# Definir los límites de los intervalos y las etiquetas correspondientes"
+"0","intervalos <- c(-Inf, 1, 2, 3, 4, Inf)"
+"0","etiquetas <- c(""Muy poca"", ""Poca"", ""Algo"", ""Bastante"", ""Mucha"")"
+"0",""
+"0","proc_base$cohesion_barrial <- cut(proc_base$cohesion_barrial, breaks = intervalos, labels = etiquetas, include.lowest = TRUE)"
+"0",""
+"0","frq(proc_base$cohesion_barrial)"
+"1","[31mx[39m[34m <categorical>[39m 
+[34m# total N=1324 valid N=1246 mean=3.49 sd=0.61[39m
+
+Value    |   N | Raw % | Valid % | Cum. %
+-----------------------------------------
+Muy poca |   0 |  0.00 |    0.00 |   0.00
+Poca     |  50 |  3.78 |    4.01 |   4.01
+Algo     | 561 | 42.37 |   45.02 |  49.04
+Bastante | 612 | 46.22 |   49.12 |  98.15
+Mucha    |  23 |  1.74 |    1.85 | 100.00
+<NA>     |  78 |  5.89 |    <NA> |   <NA>
+"
+"0","sjmisc::descr(proc_base,"
+"0","      show = c(""label"",""range"", ""mean"", ""sd"", ""NA.prc"", ""n""))%>%"
+"0","      kable(.,""markdown"")"

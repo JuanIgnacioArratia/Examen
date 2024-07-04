@@ -1,14 +1,14 @@
 {
-    "id": "D86D9048",
-    "path": "~/GitHub/R-data-analisis/R-data-analisiss.qmd",
+    "id": "E960255A",
+    "path": "~/GitHub/Trabajo 2/informe_t2.qmd",
     "project_path": null,
     "type": "quarto_markdown",
-    "hash": "1164891032",
+    "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1719978867189.0,
+    "created": 1720049224328.0,
     "source_on_save": false,
-    "relative_order": 2,
+    "relative_order": 3,
     "properties": {
         "rmdVisualMode": "true",
         "rmdVisualWrapConfigured": "true",
@@ -16,14 +16,16 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "2092:508.79998779296875"
+        "rmdVisualModeLocation": "5062:0",
+        "cursorPosition": "0,0",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1712088811,
+    "lastKnownWriteTime": 1713912153,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1712088811,
+    "last_content_update": 1713912153,
     "read_only": false,
     "read_only_alternatives": []
 }

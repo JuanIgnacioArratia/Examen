@@ -1,14 +1,14 @@
 {
-    "id": "00DAC50A",
-    "path": "~/GitHub/Trabajo 4/trabajo4final.qmd",
+    "id": "A7C967AF",
+    "path": "C:/Users/gusku/Downloads/Trabajo1.qmd",
     "project_path": null,
     "type": "quarto_markdown",
-    "hash": "3922522347",
+    "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1719977444294.0,
+    "created": 1720050515878.0,
     "source_on_save": false,
-    "relative_order": 4,
+    "relative_order": 2,
     "properties": {
         "rmdVisualMode": "true",
         "rmdVisualWrapConfigured": "true",
@@ -16,16 +16,16 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "56:0",
+        "rmdVisualModeLocation": "14865:0",
         "cursorPosition": "0,0",
-        "scrollLine": "0"
+        "scrollLine": "15"
     },
     "folds": "",
-    "lastKnownWriteTime": 1717733532,
+    "lastKnownWriteTime": 1720050512,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1717733532,
+    "last_content_update": 1720050512,
     "read_only": false,
     "read_only_alternatives": []
 }

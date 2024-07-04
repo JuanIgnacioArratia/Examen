@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -95,14 +129,538 @@ div.csl-indent {
 <p><span class="citation" data-cites="bárbaracoaguilamitta2018">(<a href="#ref-bárbaracoaguilamitta2018" role="doc-biblioref">2018</a> , p.275)</span></p>
 <p>Diversos estudios han demostrado que el sentido de pertenencia y la cohesión barrial están estrechamente relacionados con la calidad de vida de las personas. Por ejemplo, en barrios donde estos elementos están presentes, se observa una mayor participación cívica, una reducción en los niveles de delincuencia y una mejora en la salud mental y emocional de los residentes. Esto se debe a que las personas se sienten más seguras y apoyadas, lo que reduce el estrés y fomenta un ambiente positivo. Según Montelongo y Martinez (2022), “un fuerte sentido de comunidad está asociado con una mayor participación y satisfacción en la vida comunitaria”</p>
 <p><span class="citation" data-cites="marioalbertojuradomontelongo">(<a href="#ref-marioalbertojuradomontelongo" role="doc-biblioref">n.d.</a> , p.124)</span></p>
+<p>##Analisis descriptivo</p>
+<p>#Cargar base de datos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"~/GitHub/Trabajo 2/dataverse_files (1)/Datasets/ELSOC_W01_v4.01_R.RData"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(elsoc_2016)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(elsoc_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2927  428</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(elsoc_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "idencuesta"      "ola"             "version"         "muestra"        
+  [5] "cuestion_mig"    "t01"             "t02_01"          "t02_02"         
+  [9] "t02_03"          "t02_04"          "t03_01"          "t03_02"         
+ [13] "t03_03"          "t03_04"          "t04_01"          "t04_02"         
+ [17] "t04_03"          "t04_04"          "t04_05"          "t04_06"         
+ [21] "t04_07"          "t05"             "t06_01"          "t06_02"         
+ [25] "t06_03"          "t06_04"          "t06_05"          "t06_06"         
+ [29] "t06_07"          "t06_08"          "t07_01"          "t07_02"         
+ [33] "t08"             "t09_01"          "t09_02"          "t09_03"         
+ [37] "t10"             "t11_01"          "t11_02"          "t11_03"         
+ [41] "t11_04"          "r01_01"          "r02_01"          "r01_02"         
+ [45] "r02_02"          "r01_03"          "r02_03"          "r01_04"         
+ [49] "r02_04"          "r01_05"          "r02_05"          "r01_06"         
+ [53] "r02_06"          "r01_07"          "r02_07"          "r01_08"         
+ [57] "r02_08"          "r01_09"          "r02_09"          "r01_10"         
+ [61] "r02_10"          "r01_11"          "r02_11"          "r01_12"         
+ [65] "r02_12"          "r01_13"          "r02_13"          "r03_01"         
+ [69] "r03_02"          "r03_03"          "r03_04"          "r03_05"         
+ [73] "r03_06"          "r03_07"          "r03_08"          "r04_01"         
+ [77] "r04_02"          "r04_03"          "r04_04"          "r05_01"         
+ [81] "r05_02"          "r06"             "r07"             "r08"            
+ [85] "r09"             "r10"             "r11"             "r12_01"         
+ [89] "r12_02"          "r12_03"          "r12_04"          "r12_05"         
+ [93] "r12_06"          "r12_07"          "c01"             "c02"            
+ [97] "c03"             "c04"             "c05_01"          "c05_02"         
+[101] "c05_03"          "c05_04"          "c05_05"          "c05_06"         
+[105] "c05_07"          "c05_08"          "c06_01"          "c06_02"         
+[109] "c06_03"          "c06_04"          "c06_05"          "c06_06"         
+[113] "c07_01"          "c07_02"          "c07_03"          "c07_04"         
+[117] "c07_05"          "c07_06"          "c07_07"          "c07_08"         
+[121] "c08_01"          "c08_02"          "c08_03"          "c08_04"         
+[125] "c09_01"          "c09_02"          "c09_03"          "c09_04"         
+[129] "c10_01"          "c10_02"          "c10_03"          "c11"            
+[133] "c12_01"          "c12_02"          "c12_03"          "c12_04"         
+[137] "c12_05"          "c12_06"          "c12_07"          "c12_08"         
+[141] "c12_09"          "c12_09_otro"     "c13"             "c14_01"         
+[145] "c14_02"          "c15"             "c16"             "c16_otro"       
+[149] "c17"             "c17_otro"        "c18_01"          "c18_02"         
+[153] "c18_03"          "c18_04"          "c18_05"          "c18_06"         
+[157] "c18_07"          "c18_08"          "c18_09"          "c18_10"         
+[161] "c18_11"          "c19_01"          "c19_02"          "c19_03"         
+[165] "c19_04"          "c20"             "c20_otro"        "c21_01"         
+[169] "c21_02"          "c21_03"          "c21_04"          "c21_05"         
+[173] "c21_06"          "c21_07"          "c21_08"          "c21_09"         
+[177] "c21_10"          "c21_11"          "c22"             "c23"            
+[181] "c24"             "c25"             "c26"             "c27"            
+[185] "c28"             "c29"             "c30"             "c31"            
+[189] "c32_01"          "c32_02"          "c33"             "c34"            
+[193] "c35_01"          "c35_02"          "c35_03"          "c35_04"         
+[197] "d01_01"          "d01_02"          "d01_03"          "d02_01"         
+[201] "d02_02"          "d02_03"          "d03_01"          "d03_02"         
+[205] "d04_01"          "d04_02"          "d05_01"          "d05_02"         
+[209] "d05_03"          "d05_04"          "d06"             "d07"            
+[213] "d08"             "d09"             "d10"             "d11"            
+[217] "d12"             "d13"             "d14"             "d15"            
+[221] "d16"             "d17"             "d18"             "d19"            
+[225] "f01_01"          "f01_02"          "f01_03"          "f01_04"         
+[229] "f01_05"          "f01_06"          "f01_07"          "f02_01"         
+[233] "f02_02"          "f02_03"          "f02_04"          "f03_01"         
+[237] "f03_02"          "f04_01"          "f04_02"          "f05_01"         
+[241] "f05_02"          "f05_03"          "f05_04"          "f05_05"         
+[245] "f05_06"          "f05_07"          "f05_08"          "f06_01"         
+[249] "f06_02"          "s01"             "s02"             "s03"            
+[253] "s04"             "s05"             "s06"             "s07"            
+[257] "s08"             "s09"             "s10"             "s11_01"         
+[261] "s11_02"          "s11_03"          "s11_04"          "s11_05"         
+[265] "s11_06"          "s11_07"          "s11_08"          "s11_09"         
+[269] "s12"             "s13_01"          "s13_02"          "s13_03"         
+[273] "s13_04"          "s13_05"          "s13_06"          "s13_07"         
+[277] "s13_08"          "s14"             "m0_sexo"         "m0_edad"        
+[281] "m01"             "m02"             "m03"             "m04"            
+[285] "m05"             "m06"             "m07"             "m08"            
+[289] "m09"             "m10"             "m11"             "m12"            
+[293] "m13"             "m14"             "m15"             "m16"            
+[297] "m17"             "m18"             "m18_otro"        "m19"            
+[301] "m20"             "m21"             "m22"             "m23"            
+[305] "m24"             "m25"             "m26"             "m27"            
+[309] "m28"             "m29"             "m30"             "m31_01"         
+[313] "m31_02"          "m31_03"          "m31_04"          "m32"            
+[317] "m33"             "m33_otro"        "m34_01"          "m34_02"         
+[321] "m34_03"          "m35"             "m36"             "m36_otro"       
+[325] "m37_01"          "m37_02"          "m38"             "m38_otro"       
+[329] "m39"             "m40_01"          "m40_02"          "m40_comuna"     
+[333] "m40_pais"        "m41"             "m42_01"          "m42_02"         
+[337] "m42_03"          "m42_04"          "m42_04_otro"     "m43"            
+[341] "m44"             "m45"             "m45_otro"        "cod_m03"        
+[345] "cod_m04"         "cod_m22"         "cod_m23"         "nhogar1"        
+[349] "nhogar2"         "miembro01_sexo"  "miembro01_edad"  "miembro02_sexo" 
+[353] "miembro02_edad"  "miembro03_sexo"  "miembro03_edad"  "miembro04_sexo" 
+[357] "miembro04_edad"  "miembro05_sexo"  "miembro05_edad"  "miembro06_sexo" 
+[361] "miembro06_edad"  "miembro07_sexo"  "miembro07_edad"  "miembro08_sexo" 
+[365] "miembro08_edad"  "miembro09_sexo"  "miembro09_edad"  "miembro10_sexo" 
+[369] "miembro10_edad"  "miembro11_sexo"  "miembro11_edad"  "miembro12_sexo" 
+[373] "miembro12_edad"  "miembro13_sexo"  "miembro13_edad"  "region"         
+[377] "region_cod"      "comuna"          "comuna_cod"      "ponderador01"   
+[381] "ponderador02"    "fact_exp01"      "fact_exp02"      "estrato"        
+[385] "segmento"        "n_visitas_entr"  "prob_entr"       "prob_n_entr"    
+[389] "annio_entr"      "mes_entr"        "dia_entr"        "mod_t_dur"      
+[393] "mod_r_dur"       "mod_c_dur"       "mod_d_dur"       "mod_f_dur"      
+[397] "mod_s_dur"       "mod_m_dur"       "cierre_dur"      "estim_dur"      
+[401] "superv"          "tipo_superv"     "annio_superv"    "mes_superv"     
+[405] "dia_superv"      "idencuestador"   "varios_enc"      "sexo_enc"       
+[409] "annio_enc"       "mes_enc"         "dia_enc"         "civil_enc"      
+[413] "nac_enc"         "comuna_car_enc"  "comuna_enc"      "educ_enc"       
+[417] "estudios_enc"    "estado_educ_enc" "ies_enc"         "nombre_ies_enc" 
+[421] "trabaja_enc"     "motivo_enc"      "exp_campo_enc"   "exp_n_campo_enc"
+[425] "exp_capi_enc"    "exp_n_capi_enc"  "exp_annio_enc"   "capacita_enc"   </code></pre>
+</div>
+</div>
+<p>##Analisis descriptivo</p>
+<p>Como se puede apreciar, la base de datos contiene una amplia variedad de variables que pueden ser analizadas estadísticamente. Para investigar el sentimiento de pertenencia al barrio y la cohesión barrial, será necesario agrupar ciertas variables y crear una nueva base de datos con aquellas que nos interesan. El Estudio Longitudinal Social de Chile (Ola1 2016) ofrece diversas variables que nos permiten explorar la confianza interpersonal, la participación cívica y comunitaria, la percepción de pertenencia social, la cohesión entre los vecinos y la percepción de seguridad, todas ellas relevantes para este estudio.</p>
 <p>Para fortalecer el sentido de pertenencia y la cohesión barrial, es fundamental implementar políticas y programas que promuevan la participación comunitaria y el respeto mutuo. Las actividades culturales, deportivas y recreativas pueden ser excelentes herramientas para reunir a los residentes y fomentar la interacción social. Además, es importante crear espacios públicos accesibles y bien mantenidos, donde las personas puedan reunirse y disfrutar de su entorno. Fonseca (2020) sugieren que “la calidad de los espacios públicos y la percepción de seguridad son factores determinantes en la promoción del apego al lugar y la cohesión social”</p>
 <p><span class="citation" data-cites="moralesfonseca2020">(<a href="#ref-moralesfonseca2020" role="doc-biblioref">2020</a> , p.34)</span></p>
 <p>La comunicación efectiva también juega un papel crucial en la cohesión barrial. Establecer canales de comunicación abiertos y transparentes entre los residentes y las autoridades locales puede ayudar a resolver problemas de manera más eficiente y a construir confianza. Las reuniones comunitarias, los boletines informativos y las plataformas digitales pueden ser útiles para mantener a todos informados y comprometidos. Greene y Berrios (2023) destacan que “la comunicación efectiva y la participación activa de los residentes son esenciales para fortalecer el sentido de pertenencia y la cohesión en las comunidades urbanas”</p>
+<p>En consecuencia, se plantea como hipótesis que la cohesión barrial varía según el nivel educacional, el sexo y la edad de los residentes. Las variables existentes dentro de la base de datos son la confianza entre vecinos, la integración en el barrio, la seguridad en el barrio, la conectividad, la evaluación del barrio, la satisfacción con la democracia y, finalmente, la confianza en el gobierno. Pero solo se utilizarán las primeras tres mencionadas anteriormente.</p>
+<p>#seleccion de las variables</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> elsoc_2016 <span class="sc">%&gt;%</span> <span class="fu">select</span>(m01, <span class="co">#Nivel educacional</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                   m0_sexo, <span class="co">#Sexo</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                   m0_edad, <span class="co">#Edad</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                   t01, <span class="co">#Confianza en vecinos</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                   t02_02, <span class="co">#Integracion en el barrio</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                   t06_01, <span class="co">#Seguridad en el barrio</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                   t06_02, <span class="co">#Conectividad</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                   t08, <span class="co">#Evaluacion del barrio</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                   r07, <span class="co">#Contacto positivo con migrantes peruanos</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                   c01, <span class="co">#Satisfaccion con la democracia</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                   c05_01) <span class="co">#Confianza en el gobierno</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(proc_base)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(proc_base)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1324   11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(proc_base)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "m01"     "m0_sexo" "m0_edad" "t01"     "t02_02"  "t06_01"  "t06_02" 
+ [8] "t08"     "r07"     "c01"     "c05_01" </code></pre>
+</div>
+</div>
+<p>#Se procesa la nueva variable creada, la cual se llamara Cohesion barrial</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>summarytools<span class="sc">::</span><span class="fu">dfSummary</span>(proc_base, <span class="at">plain.ascii =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>### Data Frame Summary  
+#### proc_base  
+**Label:** Estudio Longitudinal Social de Chile. Ola 2016. Version 4.00 (10/06/2020)  
+**Dimensions:** 1324 x 11  
+**Duplicates:** 0  
+
+---------------------------------------------------------------------------------------------------------------------------------
+No   Variable    Stats / Values               Freqs (% of Valid)    Graph                                    Valid      Missing  
+---- ----------- ---------------------------- --------------------- ---------------------------------------- ---------- ---------
+1    m01\        Mean (sd) : 5 (27.7)\        11 distinct values    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\   1324\      0\       
+     [numeric]   min &lt; med &lt; max:\                                  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\   (100.0%)   (0.0%)   
+                 -999 &lt; 5 &lt; 10\                                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\                       
+                 IQR (CV) : 3 (5.6)                                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\                       
+                                                                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :                        
+
+2    m0_sexo\    Min  : 1\                    1 : 566 (42.7%)\      IIIIIIII \                               1324\      0\       
+     [numeric]   Mean : 1.6\                  2 : 758 (57.3%)       IIIIIIIIIII                              (100.0%)   (0.0%)   
+                 Max  : 2                                                                                                        
+
+3    m0_edad\    Mean (sd) : 43.4 (14.5)\     59 distinct values    \ \ . : . . .\                           1324\      0\       
+     [numeric]   min &lt; med &lt; max:\                                  : : : : : : :\                           (100.0%)   (0.0%)   
+                 18 &lt; 43 &lt; 78\                                      : : : : : : : .\                                             
+                 IQR (CV) : 24 (0.3)                                : : : : : : : : .\                                           
+                                                                    : : : : : : : : : .                                          
+
+4    t01\        Mean (sd) : -4.6 (84.7)\     -999 :   4 ( 0.3%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            -888 :   7 ( 0.5%)\   \                                        (100.0%)   (0.0%)   
+                 -999 &lt; 3 &lt; 5\                1 : 151 (11.4%)\      II \                                                         
+                 IQR (CV) : 2 (-18.6)         2 : 217 (16.4%)\      III \                                                        
+                                              3 : 351 (26.5%)\      IIIII \                                                      
+                                              4 : 441 (33.3%)\      IIIIII \                                                     
+                                              5 : 153 (11.6%)       II                                                           
+
+5    t02_02\     Mean (sd) : 2.8 (24.5)\      -888 :   1 ( 0.1%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            1 :  50 ( 3.8%)\      \                                        (100.0%)   (0.0%)   
+                 -888 &lt; 4 &lt; 5\                2 : 210 (15.9%)\      III \                                                        
+                 IQR (CV) : 1 (8.6)           3 : 214 (16.2%)\      III \                                                        
+                                              4 : 705 (53.2%)\      IIIIIIIIII \                                                 
+                                              5 : 144 (10.9%)       II                                                           
+
+6    t06_01\     Mean (sd) : 3.1 (1.1)\       1 : 101 ( 7.6%)\      I \                                      1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            2 : 355 (26.8%)\      IIIII \                                  (100.0%)   (0.0%)   
+                 1 &lt; 3 &lt; 5\                   3 : 237 (17.9%)\      III \                                                        
+                 IQR (CV) : 2 (0.4)           4 : 566 (42.7%)\      IIIIIIII \                                                   
+                                              5 :  65 ( 4.9%)                                                                    
+
+7    t06_02\     Mean (sd) : 2.3 (34.7)\      -888 :   2 ( 0.2%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            1 :  42 ( 3.2%)\      \                                        (100.0%)   (0.0%)   
+                 -888 &lt; 4 &lt; 5\                2 : 184 (13.9%)\      II \                                                         
+                 IQR (CV) : 1 (15.2)          3 : 142 (10.7%)\      II \                                                         
+                                              4 : 816 (61.6%)\      IIIIIIIIIIII \                                               
+                                              5 : 138 (10.4%)       II                                                           
+
+8    t08\        Mean (sd) : -3.4 (77.2)\     -888 :  10 ( 0.8%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            1 :  88 ( 6.6%)\      I \                                      (100.0%)   (0.0%)   
+                 -888 &lt; 4 &lt; 5\                2 : 236 (17.8%)\      III \                                                        
+                 IQR (CV) : 2 (-22.5)         3 : 262 (19.8%)\      III \                                                        
+                                              4 : 644 (48.6%)\      IIIIIIIII \                                                  
+                                              5 :  84 ( 6.3%)       I                                                            
+
+9    r07\        Mean (sd) : -10.9 (114.9)\   -999 :   5 ( 0.4%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            -888 :  16 ( 1.2%)\   \                                        (100.0%)   (0.0%)   
+                 -999 &lt; 4 &lt; 5\                1 :  32 ( 2.4%)\      \                                                            
+                 IQR (CV) : 1 (-10.5)         2 : 106 ( 8.0%)\      I \                                                          
+                                              3 : 350 (26.4%)\      IIIII \                                                      
+                                              4 : 611 (46.1%)\      IIIIIIIII \                                                  
+                                              5 : 204 (15.4%)       III                                                          
+
+10   c01\        Mean (sd) : -25.6 (156.4)\   -999 :   8 ( 0.6%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            -888 :  32 ( 2.4%)\   \                                        (100.0%)   (0.0%)   
+                 -999 &lt; 2 &lt; 5\                1 : 558 (42.1%)\      IIIIIIII \                                                   
+                 IQR (CV) : 2 (-6.1)          2 : 308 (23.3%)\      IIII \                                                       
+                                              3 : 296 (22.4%)\      IIII \                                                       
+                                              4 :  93 ( 7.0%)\      I \                                                          
+                                              5 :  29 ( 2.2%)                                                                    
+
+11   c05_01\     Mean (sd) : 0.4 (36.8)\      -999 :   1 ( 0.1%)\   \                                        1324\      0\       
+     [numeric]   min &lt; med &lt; max:\            -888 :   1 ( 0.1%)\   \                                        (100.0%)   (0.0%)   
+                 -999 &lt; 2 &lt; 5\                1 : 633 (47.8%)\      IIIIIIIII \                                                  
+                 IQR (CV) : 2 (88.3)          2 : 353 (26.7%)\      IIIII \                                                      
+                                              3 : 260 (19.6%)\      III \                                                        
+                                              4 :  60 ( 4.5%)\      \                                                            
+                                              5 :  16 ( 1.2%)                                                                    
+---------------------------------------------------------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<p>##Tal como se observa, todas las variables, a excepción de las de nivel educativo, sexo y edad, tienen valores que van del 1 al 5. Esto indica que nos encontramos con variables de tipo ordinal, es decir, variables que utilizan números para ordenarse en series a modo de ranking. A partir de los datos, se puede ver que la mayor frecuencia de respuestas se encuentra entre los valores 3 y 4, concentrando valores que van del 10% al 61%. Esto implica que, para los efectos de estas variables, observamos una valoración positiva respecto a la confianza, integración, seguridad y evaluación de las comunidades barriales. Sin embargo, hay dos variables donde estos resultados difieren: la satisfacción con la democracia y la confianza en el gobierno. En estas dos últimas, la mayor frecuencia de resultados se concentra entre las categorías de respuesta 1, 2 y 3, lo cual indica una muy baja confianza en el gobierno. Según el manual de variables del Estudio Longitudinal Social de Chile, la categoría de respuesta 1 corresponde a “muy poco”. Esto significa que, en lo que respecta a la satisfacción con la democracia y la confianza en el gobierno, un 42.1% y un 47.8% de la muestra confía muy poco o casi nada en el gobierno y/o no está satisfecha con la democracia.</p>
+<p>Para la creación de una variable de cohesión barrial, tomaremos las siguientes variables para construir un índice compuesto: confianza en vecinos, integración en el barrio, seguridad en el barrio, conectividad, evaluación del barrio, contacto positivo con migrantes peruanos, satisfacción con la democracia y confianza en el gobierno. Tal como menciona la tabla, las categorías de respuesta están fijadas de 1 a 5, y según el libro de códigos del cuestionario, esto significa que las categorías de respuesta van de menor a mayor, es decir, desde “muy en desacuerdo” a “muy de acuerdo” o un grado de confianza desde lo bajo hasta lo alto, siendo 1 lo más bajo y 5 lo mayor. Lo que buscamos al crear este índice compuesto es agrupar todos esos elementos que reflejan una cohesión barrial, para así analizarlos en conjunto y determinar, en función de esta escala, si la cohesión barrial es baja o alta.</p>
+<section id="cohesión-barrial" class="level4">
+<h4 class="anchored" data-anchor-id="cohesión-barrial">Cohesión Barrial</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>cohesion_barrial <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">select</span>(proc_base, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"t01"</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"t02_02"</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"t06_01"</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"t06_02"</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"t08"</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"r07"</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"c01"</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                                              <span class="fu">starts_with</span>(<span class="st">"c05_01"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_label</span>(proc_base)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             m01          m0_sexo          m0_edad              t01 
+              ""               ""               ""               "" 
+          t02_02           t06_01           t06_02              t08 
+              ""               ""               ""               "" 
+             r07              c01           c05_01 cohesion_barrial 
+              ""               ""               ""               "" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>cohesion_social)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>##Nos encontramos por un lado que la variable no cuenta con etiquetas, y que aún posee los datos perdidos que están denominados con los valores -999 y -888. Para ello vamos a recodificar los valores negativos como datos perdidos, y etiquetar los valores de la cohesión barrial:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recodificar valores negativos como NA</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>cohesion_barrial <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(proc_base<span class="sc">$</span>cohesion_barrial <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="cn">NA</span>, proc_base<span class="sc">$</span>cohesion_barrial)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Etiquetar los valores de la variable cohesion_barrial</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(proc_base<span class="sc">$</span>cohesion_barrial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.250   2.750   3.125   3.038   3.375   4.500      78 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>cohesion_barrial <span class="ot">&lt;-</span> <span class="fu">set_labels</span>(proc_base<span class="sc">$</span>cohesion_barrial,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">labels=</span><span class="fu">c</span>( <span class="st">"Muy poca"</span><span class="ot">=</span><span class="dv">1</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"Poca"</span><span class="ot">=</span><span class="dv">2</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"Algo"</span><span class="ot">=</span><span class="dv">3</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"Bastante"</span><span class="ot">=</span><span class="dv">4</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"Mucha"</span><span class="ot">=</span><span class="dv">5</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>cohesion_barrial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x &lt;numeric&gt; 
+# total N=1324 valid N=1246 mean=3.04 sd=0.52
+
+Value |    Label |   N | Raw % | Valid % | Cum. %
+-------------------------------------------------
+ 1.00 | Muy poca |   0 |  0.00 |    0.00 |   0.00
+ 1.25 |     1.25 |   1 |  0.08 |    0.08 |   0.08
+ 1.50 |      1.5 |   2 |  0.15 |    0.16 |   0.24
+ 1.62 |    1.625 |   4 |  0.30 |    0.32 |   0.56
+ 1.75 |     1.75 |   8 |  0.60 |    0.64 |   1.20
+ 1.88 |    1.875 |  17 |  1.28 |    1.36 |   2.57
+ 2.00 |     Poca |  18 |  1.36 |    1.44 |   4.01
+ 2.12 |    2.125 |  24 |  1.81 |    1.93 |   5.94
+ 2.25 |     2.25 |  35 |  2.64 |    2.81 |   8.75
+ 2.38 |    2.375 |  53 |  4.00 |    4.25 |  13.00
+ 2.50 |      2.5 |  53 |  4.00 |    4.25 |  17.26
+ 2.62 |    2.625 |  86 |  6.50 |    6.90 |  24.16
+ 2.75 |     2.75 | 114 |  8.61 |    9.15 |  33.31
+ 2.88 |    2.875 |  93 |  7.02 |    7.46 |  40.77
+ 3.00 |     Algo | 103 |  7.78 |    8.27 |  49.04
+ 3.12 |    3.125 | 110 |  8.31 |    8.83 |  57.87
+ 3.25 |     3.25 | 136 | 10.27 |   10.91 |  68.78
+ 3.38 |    3.375 | 117 |  8.84 |    9.39 |  78.17
+ 3.50 |      3.5 |  93 |  7.02 |    7.46 |  85.63
+ 3.62 |    3.625 |  63 |  4.76 |    5.06 |  90.69
+ 3.75 |     3.75 |  38 |  2.87 |    3.05 |  93.74
+ 3.88 |    3.875 |  37 |  2.79 |    2.97 |  96.71
+ 4.00 | Bastante |  18 |  1.36 |    1.44 |  98.15
+ 4.12 |    4.125 |  11 |  0.83 |    0.88 |  99.04
+ 4.25 |     4.25 |   8 |  0.60 |    0.64 |  99.68
+ 4.38 |    4.375 |   2 |  0.15 |    0.16 |  99.84
+ 4.50 |      4.5 |   2 |  0.15 |    0.16 | 100.00
+ 5.00 |    Mucha |   0 |  0.00 |    0.00 | 100.00
+ &lt;NA&gt; |     &lt;NA&gt; |  78 |  5.89 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>##A pesar de haber etiquetado los valores de las variables, estan no quedan definidas con limites intervalares y las etiquetas que les corresponden</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir los límites de los intervalos y las etiquetas correspondientes</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>intervalos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="cn">Inf</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>etiquetas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Muy poca"</span>, <span class="st">"Poca"</span>, <span class="st">"Algo"</span>, <span class="st">"Bastante"</span>, <span class="st">"Mucha"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>cohesion_barrial <span class="ot">&lt;-</span> <span class="fu">cut</span>(proc_base<span class="sc">$</span>cohesion_barrial, <span class="at">breaks =</span> intervalos, <span class="at">labels =</span> etiquetas, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>cohesion_barrial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x &lt;categorical&gt; 
+# total N=1324 valid N=1246 mean=3.49 sd=0.61
+
+Value    |   N | Raw % | Valid % | Cum. %
+-----------------------------------------
+Muy poca |   0 |  0.00 |    0.00 |   0.00
+Poca     |  50 |  3.78 |    4.01 |   4.01
+Algo     | 561 | 42.37 |   45.02 |  49.04
+Bastante | 612 | 46.22 |   49.12 |  98.15
+Mucha    |  23 |  1.74 |    1.85 | 100.00
+&lt;NA&gt;     |  78 |  5.89 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sjmisc<span class="sc">::</span><span class="fu">descr</span>(proc_base,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">show =</span> <span class="fu">c</span>(<span class="st">"label"</span>,<span class="st">"range"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"NA.prc"</span>, <span class="st">"n"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>(.,<span class="st">"markdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">var</th>
+<th style="text-align: left;">label</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">NA.prc</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: left;">range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">m01</td>
+<td style="text-align: left;">m01</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">4.9577039</td>
+<td style="text-align: right;">27.6973661</td>
+<td style="text-align: left;">1009 (-999-10)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">m0_sexo</td>
+<td style="text-align: left;">m0_sexo</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">1.5725076</td>
+<td style="text-align: right;">0.4949017</td>
+<td style="text-align: left;">1 (1-2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">m0_edad</td>
+<td style="text-align: left;">m0_edad</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">43.4033233</td>
+<td style="text-align: right;">14.4706188</td>
+<td style="text-align: left;">60 (18-78)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">t01</td>
+<td style="text-align: left;">t01</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">-4.5657100</td>
+<td style="text-align: right;">84.7354662</td>
+<td style="text-align: left;">1004 (-999-5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">t02_02</td>
+<td style="text-align: left;">t02_02</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">2.8429003</td>
+<td style="text-align: right;">24.5217186</td>
+<td style="text-align: left;">893 (-888-5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">t06_01</td>
+<td style="text-align: left;">t06_01</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">3.1049849</td>
+<td style="text-align: right;">1.0894974</td>
+<td style="text-align: left;">4 (1-5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">t06_02</td>
+<td style="text-align: left;">t06_02</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">2.2764350</td>
+<td style="text-align: right;">34.6539836</td>
+<td style="text-align: left;">893 (-888-5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">t08</td>
+<td style="text-align: left;">t08</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">-3.4274924</td>
+<td style="text-align: right;">77.2039736</td>
+<td style="text-align: left;">893 (-888-5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">r07</td>
+<td style="text-align: left;">r07</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">-10.9101208</td>
+<td style="text-align: right;">114.9043912</td>
+<td style="text-align: left;">1004 (-999-5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">c01</td>
+<td style="text-align: left;">c01</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">-25.5506042</td>
+<td style="text-align: right;">156.3948808</td>
+<td style="text-align: left;">1004 (-999-5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">c05_01</td>
+<td style="text-align: left;">c05_01</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.4169184</td>
+<td style="text-align: right;">36.8041112</td>
+<td style="text-align: left;">1004 (-999-5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">cohesion_barrial</td>
+<td style="text-align: left;">cohesion_barrial</td>
+<td style="text-align: right;">1246</td>
+<td style="text-align: right;">5.891239</td>
+<td style="text-align: right;">3.4879615</td>
+<td style="text-align: right;">0.6060733</td>
+<td style="text-align: left;">3 (2-5)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>##De esta manera, y de acuerdo con estos valores y variables, los datos muestran que solo un 4.01% de la muestra percibe que existe poca cohesión barrial. Mientras que un total de 94.14% de la muestra considera que hay bastante o algo de cohesión barrial. Además, la media de cohesión barrial es de 3.5. Es decir, un 94.14% cree que la comunidad mantiene el bienestar para todos sus miembros, evitando la polarización y minimizando las disparidades.</p>
+<p>Si representamos esto en un gráfico, se vería de la siguiente manera:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el gráfico usando ggplot2</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>graphx1 <span class="ot">&lt;-</span> proc_base <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cohesion_barrial)) <span class="sc">+</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"pink"</span>)<span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cohesion barrial"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Cohesion barrial"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frecuencia"</span>) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir la ruta completa del subdirectorio</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>dir_path <span class="ot">&lt;-</span> <span class="st">"C:/Users/gusku/OneDrive/Documentos/GitHub/Examen/Examen"</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear subdirectorio </span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(dir_path)) {</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(dir_path)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar la gráfica</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">file.path</span>(dir_path, <span class="st">"graph1.png"</span>), <span class="at">plot =</span> graphx1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
 <p><span class="citation" data-cites="margaritagreene2023">(<a href="#ref-margaritagreene2023" role="doc-biblioref">2023</a> , p.87)</span></p>
 <p>En conclusión, el sentimiento de pertenencia y la cohesión barrial son fundamentales para el bienestar de las comunidades. Fomentar estos elementos a través de políticas inclusivas, actividades comunitarias y una comunicación efectiva puede llevar a la creación de barrios más unidos y resilientes. Al fortalecer los lazos sociales y promover la colaboración, se construye una comunidad donde todos sus miembros pueden sentirse valorados, seguros y apoyados, mejorando así la calidad de vida de todos.</p>
 <p><a href="https://juanignacioarratia.github.io/Examen/examen.html" class="uri">https://juanignacioarratia.github.io/Examen/examen.html</a></p>
 <p>texto</p>
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">

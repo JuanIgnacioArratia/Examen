@@ -22,11 +22,150 @@ Diversos estudios han demostrado que el sentido de pertenencia y la cohesión ba
 
 [-@marioalbertojuradomontelongo , p.124]
 
+##Analisis descriptivo
+
+```{r Analisis descriptivo/cargar paquetes, include=FALSE}
+pacman::p_load(sjlabelled,
+               dplyr, #Manipulacion de datos
+              stargazer, #Tablas
+              sjmisc, # Tablas
+              summarytools, # Tablas
+              kableExtra, #Tablas
+              sjPlot, #Tablas y gráficos
+              corrplot, # Correlaciones
+              sessioninfo, # Información de la sesión de trabajo
+              ggplot2) # Para la mayoría de los gráficos
+```
+
+#Cargar base de datos
+
+```{r echo=TRUE}
+load("~/GitHub/Trabajo 2/dataverse_files (1)/Datasets/ELSOC_W01_v4.01_R.RData")
+View(elsoc_2016)
+dim(elsoc_2016)
+names(elsoc_2016)
+```
+
+##Analisis descriptivo
+
+Como se puede apreciar, la base de datos contiene una amplia variedad de variables que pueden ser analizadas estadísticamente. Para investigar el sentimiento de pertenencia al barrio y la cohesión barrial, será necesario agrupar ciertas variables y crear una nueva base de datos con aquellas que nos interesan. El Estudio Longitudinal Social de Chile (Ola1 2016) ofrece diversas variables que nos permiten explorar la confianza interpersonal, la participación cívica y comunitaria, la percepción de pertenencia social, la cohesión entre los vecinos y la percepción de seguridad, todas ellas relevantes para este estudio.
+
 Para fortalecer el sentido de pertenencia y la cohesión barrial, es fundamental implementar políticas y programas que promuevan la participación comunitaria y el respeto mutuo. Las actividades culturales, deportivas y recreativas pueden ser excelentes herramientas para reunir a los residentes y fomentar la interacción social. Además, es importante crear espacios públicos accesibles y bien mantenidos, donde las personas puedan reunirse y disfrutar de su entorno. Fonseca (2020) sugieren que "la calidad de los espacios públicos y la percepción de seguridad son factores determinantes en la promoción del apego al lugar y la cohesión social"
 
 [-@moralesfonseca2020 , p.34]
 
 La comunicación efectiva también juega un papel crucial en la cohesión barrial. Establecer canales de comunicación abiertos y transparentes entre los residentes y las autoridades locales puede ayudar a resolver problemas de manera más eficiente y a construir confianza. Las reuniones comunitarias, los boletines informativos y las plataformas digitales pueden ser útiles para mantener a todos informados y comprometidos. Greene y Berrios (2023) destacan que "la comunicación efectiva y la participación activa de los residentes son esenciales para fortalecer el sentido de pertenencia y la cohesión en las comunidades urbanas"
+
+En consecuencia, se plantea como hipótesis que la cohesión barrial varía según el nivel educacional, el sexo y la edad de los residentes. Las variables existentes dentro de la base de datos son la confianza entre vecinos, la integración en el barrio, la seguridad en el barrio, la conectividad, la evaluación del barrio, la satisfacción con la democracia y, finalmente, la confianza en el gobierno. Pero solo se utilizarán las primeras tres mencionadas anteriormente.
+
+#seleccion de las variables
+
+```{r echo=TRUE}
+proc_base <- elsoc_2016 %>% select(m01, #Nivel educacional
+                                   m0_sexo, #Sexo
+                                   m0_edad, #Edad
+                                   t01, #Confianza en vecinos
+                                   t02_02, #Integracion en el barrio
+                                   t06_01, #Seguridad en el barrio
+                                   t06_02, #Conectividad
+                                   t08, #Evaluacion del barrio
+                                   r07, #Contacto positivo con migrantes peruanos
+                                   c01, #Satisfaccion con la democracia
+                                   c05_01) #Confianza en el gobierno
+
+proc_base <- na.omit(proc_base)
+
+dim(proc_base)
+names(proc_base)
+```
+
+#Se procesa la nueva variable creada, la cual se llamara Cohesion barrial
+
+```{r}
+summarytools::dfSummary(proc_base, plain.ascii = FALSE)
+```
+
+##Tal como se observa, todas las variables, a excepción de las de nivel educativo, sexo y edad, tienen valores que van del 1 al 5. Esto indica que nos encontramos con variables de tipo ordinal, es decir, variables que utilizan números para ordenarse en series a modo de ranking. A partir de los datos, se puede ver que la mayor frecuencia de respuestas se encuentra entre los valores 3 y 4, concentrando valores que van del 10% al 61%. Esto implica que, para los efectos de estas variables, observamos una valoración positiva respecto a la confianza, integración, seguridad y evaluación de las comunidades barriales. Sin embargo, hay dos variables donde estos resultados difieren: la satisfacción con la democracia y la confianza en el gobierno. En estas dos últimas, la mayor frecuencia de resultados se concentra entre las categorías de respuesta 1, 2 y 3, lo cual indica una muy baja confianza en el gobierno. Según el manual de variables del Estudio Longitudinal Social de Chile, la categoría de respuesta 1 corresponde a "muy poco". Esto significa que, en lo que respecta a la satisfacción con la democracia y la confianza en el gobierno, un 42.1% y un 47.8% de la muestra confía muy poco o casi nada en el gobierno y/o no está satisfecha con la democracia.
+
+Para la creación de una variable de cohesión barrial, tomaremos las siguientes variables para construir un índice compuesto: confianza en vecinos, integración en el barrio, seguridad en el barrio, conectividad, evaluación del barrio, contacto positivo con migrantes peruanos, satisfacción con la democracia y confianza en el gobierno. Tal como menciona la tabla, las categorías de respuesta están fijadas de 1 a 5, y según el libro de códigos del cuestionario, esto significa que las categorías de respuesta van de menor a mayor, es decir, desde "muy en desacuerdo" a "muy de acuerdo" o un grado de confianza desde lo bajo hasta lo alto, siendo 1 lo más bajo y 5 lo mayor. Lo que buscamos al crear este índice compuesto es agrupar todos esos elementos que reflejan una cohesión barrial, para así analizarlos en conjunto y determinar, en función de esta escala, si la cohesión barrial es baja o alta.
+
+#### Cohesión Barrial
+
+```{r}
+proc_base$cohesion_barrial <- rowMeans(select(proc_base, 
+                                              starts_with("t01"),
+                                              starts_with("t02_02"),
+                                              starts_with("t06_01"),
+                                              starts_with("t06_02"),
+                                              starts_with("t08"),
+                                              starts_with("r07"),
+                                              starts_with("c01"),
+                                              starts_with("c05_01")))
+```
+
+```{r}
+sjlabelled::get_label(proc_base)
+frq(proc_base$cohesion_social)
+```
+
+##Nos encontramos por un lado que la variable no cuenta con etiquetas, y que aún posee los datos perdidos que están denominados con los valores -999 y -888. Para ello vamos a recodificar los valores negativos como datos perdidos, y etiquetar los valores de la cohesión barrial:
+
+```{r}
+# Recodificar valores negativos como NA
+proc_base$cohesion_barrial <- ifelse(proc_base$cohesion_barrial < 0, NA, proc_base$cohesion_barrial)
+
+# Etiquetar los valores de la variable cohesion_barrial
+summary(proc_base$cohesion_barrial)
+
+proc_base$cohesion_barrial <- set_labels(proc_base$cohesion_barrial,
+                                        labels=c( "Muy poca"=1,
+                                                  "Poca"=2,
+                                                  "Algo"=3,
+                                                  "Bastante"=4,
+                                                  "Mucha"=5))
+frq(proc_base$cohesion_barrial)
+```
+
+##A pesar de haber etiquetado los valores de las variables, estan no quedan definidas con limites intervalares y las etiquetas que les corresponden
+
+```{r}
+# Definir los límites de los intervalos y las etiquetas correspondientes
+intervalos <- c(-Inf, 1, 2, 3, 4, Inf)
+etiquetas <- c("Muy poca", "Poca", "Algo", "Bastante", "Mucha")
+
+proc_base$cohesion_barrial <- cut(proc_base$cohesion_barrial, breaks = intervalos, labels = etiquetas, include.lowest = TRUE)
+
+frq(proc_base$cohesion_barrial)
+
+sjmisc::descr(proc_base,
+      show = c("label","range", "mean", "sd", "NA.prc", "n"))%>%
+      kable(.,"markdown")
+```
+
+##De esta manera, y de acuerdo con estos valores y variables, los datos muestran que solo un 4.01% de la muestra percibe que existe poca cohesión barrial. Mientras que un total de 94.14% de la muestra considera que hay bastante o algo de cohesión barrial. Además, la media de cohesión barrial es de 3.5. Es decir, un 94.14% cree que la comunidad mantiene el bienestar para todos sus miembros, evitando la polarización y minimizando las disparidades.
+
+Si representamos esto en un gráfico, se vería de la siguiente manera:
+
+```{r}
+# Crear el gráfico usando ggplot2
+graphx1 <- proc_base %>% ggplot(aes(x = cohesion_barrial)) + 
+  geom_bar(fill = "pink")+
+  labs(title = "Cohesion barrial",
+       x = "Cohesion barrial",
+       y = "Frecuencia") +
+  theme_bw()
+
+# Definir la ruta completa del subdirectorio
+dir_path <- "C:/Users/gusku/OneDrive/Documentos/GitHub/Examen/Examen"
+
+# Crear subdirectorio 
+if (!dir.exists(dir_path)) {
+  dir.create(dir_path)
+}
+
+# Guardar la gráfica
+ggsave(filename = file.path(dir_path, "graph1.png"), plot = graphx1)
+```
 
 [-@margaritagreene2023 , p.87]
 

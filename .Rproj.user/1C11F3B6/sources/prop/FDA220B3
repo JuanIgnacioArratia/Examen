@@ -1,11 +1,11 @@
 {
-    "rmdVisualMode": "false",
+    "rmdVisualMode": "true",
     "rmdVisualWrapConfigured": "true",
     "source_window_id": "",
     "Source": "Source",
     "docOutlineVisible": "1",
     "rmdVisualCollapsedChunks": "",
-    "cursorPosition": "166,68",
-    "scrollLine": "158",
-    "rmdVisualModeLocation": "11862:4084"
+    "rmdVisualModeLocation": "5062:0",
+    "cursorPosition": "0,0",
+    "scrollLine": "0"
 }
