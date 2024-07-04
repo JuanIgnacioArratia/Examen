@@ -3,7 +3,7 @@
     "path": "~/GitHub/Examen/Examen/examen.qmd",
     "project_path": "examen.qmd",
     "type": "quarto_markdown",
-    "hash": "0",
+    "hash": "3510576011",
     "contents": "",
     "dirty": false,
     "created": 1719959593853.0,
@@ -16,16 +16,16 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "cursorPosition": "262,0",
-        "scrollLine": "239",
-        "rmdVisualModeLocation": "19764:9242.400390625"
+        "cursorPosition": "335,24",
+        "scrollLine": "323",
+        "rmdVisualModeLocation": "22613:14752"
     },
     "folds": "",
-    "lastKnownWriteTime": 1720055564,
+    "lastKnownWriteTime": 1720057496,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1720055564550,
+    "last_content_update": 1720057496879,
     "read_only": false,
     "read_only_alternatives": []
 }

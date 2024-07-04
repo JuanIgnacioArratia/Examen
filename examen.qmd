@@ -303,10 +303,75 @@ ggplot(datos, aes(x = educacion, y = promedio, color = Sexo, shape = Sexo)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
+## Correlación entre variables
+
+![](images/variables.jpeg)
+
+## Correlación entre variables
+
+![](images/variables%202.jpeg)
+
+## Cohesión Barrial
+
+![](images/xxx.jpg)
+
+## Cohesión Barrial
+
+::: incremental
+-   En general, no parece haber una alta percepción de cohesión barrial entre los encuestados. La mayoría tiene una percepción neutra, y un porcentaje significativo está en desacuerdo con la afirmación sobre cohesión barrial. Esto sugiere que la percepción de cohesión barrial no es fuerte en esta comunidad según los datos disponibles.Cohesión social según Sexo
+:::
+
+## Cohesión Barrial según Sexo
+
+![](images/base.jpeg)
+
+## Cohesión Barrial según Sexo
+
+::: incremental
+**Correlación de 0.02**: Existe una correlación positiva muy débil entre cohesión barrial y sexo. Esto indica que el sexo de una persona apenas influye en su sentido de pertenencia al barrio.
+:::
+
+## Cohesión social según Sexo y Nivel Educacional
+
+![](images/base-01.jpeg)
+
+\#**Correlación de -0.03**: Existe una correlación negativa muy débil entre nivel educativo y sexo, indicando que hay una ligera tendencia a que las diferencias de nivel educativo varíen ligeramente con el sexo, pero este efecto es casi insignificante.
+
+## Regresión Lineal
+
+-   La cohesión barrial se puede modelar como una función de las variables mencionadas. Utilizando la confianza en los vecinos como una de las medidas de cohesión social, podemos realizar una regresión lineal donde la confianza en los vecinos es la variable dependiente y el nivel educacional, el sexo y la edad son las variables independientes.
+
+## Regresión Lineal - Edad
+
+![](images/edad.jpeg)
+
+## Regresión Lineal - Edad
+
+El valor p asociado con `m0_edad` es 0.2767. Esto indica que no hay suficiente evidencia para rechazar la hipótesis nula de que la edad no tiene un efecto significativo en la percepción de cohesión barrial. En otras palabras, no podemos afirmar con confianza que haya una relación estadísticamente significativa entre la edad y la percepción de cohesión barrial en la muestra analizada.
+
+## Regresión Lineal - Nivel Educacional
+
+![](images/educa.jpeg)
+
+## Regresión Lineal - Nivel Educacional
+
+-   ::: justify
+    ::: justify
+    El valor p asociado con `m01` es 0.999740.999740.99974. Este valor p es muy alto, lo que sugiere que no hay suficiente evidencia para rechazar la hipótesis nula de que el nivel educacional no tiene un efecto significativo en la percepción de cohesión barrial. En otras palabras, no podemos afirmar con confianza que haya una relación estadísticamente significativa entre el nivel educacional y la percepción de cohesión barrial en la muestra analizada.
+    :::
+    :::
+
+## Regresión Lineal - sexo
+
+![](images/sexooo.jpeg)
+
+## Regresión Lineal - sexo
+
+El valor p asociado con `m0_sexo` es 0.360740.360740.36074. Este valor p es mayor que 0.05, lo que indica que no hay suficiente evidencia para rechazar la hipótesis nula de que el sexo no tiene un efecto significativo en la percepción de cohesión barrial. En otras palabras, no podemos afirmar con confianza que haya una relación estadísticamente significativa entre el sexo y la percepción de cohesión barrial en la muestra analizada.
+
+```         
+```
+
 ##Como podemos observar, los datos continúan mostrando valores entre 3 y 4, lo que indica que en 2016, según esta encuesta y las variables seleccionadas, la población chilena percibía una cohesión social significativa. Los resultados se mantienen mayoritariamente en las categorías 'Algo' y 'Bastante', lo que refleja una capacidad considerable para asegurar el bienestar y minimizar disparidades, evitando la politización, tal como menciona Margarita Grenne. Además, las otras variables incorporadas para concebir la cohesión social corroboran estos hallazgos. Tanto el sexo, la edad y el nivel educativo influyen de manera transversal en la percepción de la cohesión social. Según los datos del Estudio Longitudinal Social de Chile, se observa una percepción sustantiva de la cohesión social. No obstante, debemos llevar estos resultados a la práctica desde las ciencias sociales, implementando políticas públicas que fortalezcan la confianza interpersonal, la seguridad, la integración y la satisfacción con el gobierno. Solo así podremos desarrollar políticas que mejoren la calidad de vida en la sociedad chilena. Sería igualmente relevante contrastar estos datos con información actual para entender cómo ha evolucionado esta percepción a lo largo del tiempo, considerando eventos significativos como el estallido social, la pandemia y los cambios políticos.
 
 [-@margaritagreene2023 , p.134]
-
-[https://juanignacioarratia.github.io/Examen/examen.html](#0){.uri style="font-size: 11pt;"}
-
-texto
