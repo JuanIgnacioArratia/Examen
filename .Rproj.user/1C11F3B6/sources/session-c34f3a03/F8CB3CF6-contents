@@ -54,8 +54,6 @@ Para fortalecer el sentido de pertenencia y la cohesión barrial, es fundamental
 
 [-@moralesfonseca2020 , p.34]
 
-La comunicación efectiva también juega un papel crucial en la cohesión barrial. Establecer canales de comunicación abiertos y transparentes entre los residentes y las autoridades locales puede ayudar a resolver problemas de manera más eficiente y a construir confianza. Las reuniones comunitarias, los boletines informativos y las plataformas digitales pueden ser útiles para mantener a todos informados y comprometidos. Greene y Berrios (2023) destacan que "la comunicación efectiva y la participación activa de los residentes son esenciales para fortalecer el sentido de pertenencia y la cohesión en las comunidades urbanas"
-
 En consecuencia, se plantea como hipótesis que la cohesión barrial varía según el nivel educacional, el sexo y la edad de los residentes. Las variables existentes dentro de la base de datos son la confianza entre vecinos, la integración en el barrio, la seguridad en el barrio, la conectividad, la evaluación del barrio, la satisfacción con la democracia y, finalmente, la confianza en el gobierno. Pero solo se utilizarán las primeras tres mencionadas anteriormente.
 
 #seleccion de las variables
@@ -171,10 +169,144 @@ print(graphx1)
 ggsave(filename = file.path(dir_path, "graph1.png"), plot = graphx1)
 ```
 
-[-@margaritagreene2023 , p.87]
+##Según lo que muestra el gráfico, más de 600 personas indican que existe una considerable cohesión barrial según las respuestas que dieron en el cuestionario de ElSOC (2016). Además, un poco menos de 600 personas creen que hay algo de cohesión barrial. Esto indica que, para el año 2016, había una alta percepción de cohesión barrial en la población chilena. Ahora, en función de lo planteado en la introducción, examinemos cómo varía la percepción de la cohesión barrial en relación con el nivel educacional, el sexo y/o la edad. Para ello, será necesario etiquetar estas variables y realizar tablas de análisis.
 
-En conclusión, el sentimiento de pertenencia y la cohesión barrial son fundamentales para el bienestar de las comunidades. Fomentar estos elementos a través de políticas inclusivas, actividades comunitarias y una comunicación efectiva puede llevar a la creación de barrios más unidos y resilientes. Al fortalecer los lazos sociales y promover la colaboración, se construye una comunidad donde todos sus miembros pueden sentirse valorados, seguros y apoyados, mejorando así la calidad de vida de todos.
+#etiquetar variables
 
-<https://juanignacioarratia.github.io/Examen/examen.html>
+```{r}
+#Etiquetar
+proc_base <- proc_base %>% rename("N_ed"=m01, # Nivel Educacional
+                                  "Sexo"=m0_sexo, # Sexo
+                                  "Edad"=m0_edad) # Edad
+
+proc_base$N_ed <- set_label(x = proc_base$N_ed,label = "Nivel Educacional")
+get_label(proc_base$N_ed)
+proc_base$Sexo <- set_label(x = proc_base$Sexo,label = "Sexo")
+get_label(proc_base$Sexo)
+proc_base$Edad <- set_label(x = proc_base$Edad,label = "Edad")
+get_label(proc_base$Edad)
+proc_base$cohesion_barrial <- set_label(x = proc_base$cohesion_barrial,label = "Cohesion barrial")
+get_label(proc_base$cohesion_barrial)
+```
+
+#Nivel educacional
+
+```{r}
+frq(proc_base$N_ed)
+```
+
+##La tabla arroja resultados con datos no codificados ni procesados para ello etiquetaremos los niveles educativos de la siguiente forma:
+
+```{r}
+proc_base$N_ed <- car::recode(proc_base$N_ed, "c(1,2,3)=1; c(4,5)=2; c(6,7,8,9,10)=3")
+frq(proc_base$N_ed)
+```
+
+###1 corresponderia a educacion basica, 2 a educacion media y 3 a educacion superior
+
+```{r}
+proc_base$N_ed <- factor(proc_base$N_ed,
+                             labels = c("Educacion basica", "Educacion media", "Educacion superior"),
+                             levels = c(1, 2, 3))
+frq(proc_base$N_ed)
+```
+
+##De esta manera, podemos observar que solo un 14.88% de la muestra ha completado como máximo la educación básica, mientras que un 42.15% tiene educación media. Por último, un 42.90% ha alcanzado la educación superior.
+
+```{r}
+proc_base <- rename(proc_base,"educacion"=N_ed) #Cambiamos nombre a la variable
+
+sjt.xtab(proc_base$cohesion_barrial, proc_base$educacion,
+        show.col.prc=TRUE,
+        show.summary=FALSE,
+        encoding = "UTF-8")
+```
+
+##Frente a estos datos, observamos que un 53.7% de quienes tienen educación superior creen que hay bastante cohesión barrial. De manera similar, un 48.7% de aquellos con educación media piensa que existe algo de cohesión barrial. Los porcentajes más bajos de percepción de poca o muy poca cohesión barrial se encuentran en todos los niveles educativos, oscilando entre un 2.6% y un 5.3%. Esto indica que la percepción de baja cohesión barrial es mínima en la muestra estudiada.
+
+A pesar de lo que muestra el gráfico, parece que el nivel educativo no influye significativamente en la percepción de cohesión barrial en el país. Los porcentajes se mantienen consistentes en cada segmento de cohesión barrial y nivel educativo, lo que sugiere que existe un alto grado de cohesión barrial independientemente del nivel educativo de la población. Esto señala que la cohesión barrial trasciende el ámbito educativo.
+
+La comunicación efectiva también desempeña un papel crucial en la cohesión barrial. Establecer canales de comunicación abiertos y transparentes entre los residentes y las autoridades locales puede facilitar la resolución de problemas de manera más eficiente y construir confianza. Las reuniones comunitarias, los boletines informativos y las plataformas digitales son recursos útiles para mantener a todos informados y comprometidos. Según Greene y Berrios (2023), "la comunicación efectiva y la participación activa de los residentes son fundamentales para fortalecer el sentido de pertenencia y la cohesión en las comunidades urbanas", lo cual complementa la idea de que la comunicación adecuada promueve una mayor cohesión barrial.[-@margaritagreene2023 , p.87]
+
+##ahora segumos con la variable sexo y la varibale edad
+
+```{r}
+#Etiquetamos
+frq(proc_base$Sexo)
+proc_base$Sexo <- car::recode(proc_base$Sexo, "1=0;2=1")
+proc_base$Sexo <- factor(proc_base$Sexo,
+                         labels=c( "Hombre",
+                                   "Mujer"),
+                         levels=c(0,1))
+get_label(proc_base$Sexo)
+proc_base$Sexo <- set_label(x = proc_base$Sexo,label = "Sexo")
+frq(proc_base$Sexo)
+```
+
+```{r}
+graphx2 <- proc_base %>% ggplot(aes(x = cohesion_barrial, fill = Sexo)) + 
+  geom_bar() +
+  xlab("Cohesión barrial") +
+  ylab("Cantidad") + 
+  labs(fill="Sexo")+
+  scale_fill_discrete(labels = c('Hombre','Mujer'))
+
+#ver la gráfica 
+print(graphx2)
+
+
+# Guardar la gráfica
+ggsave(filename = file.path(dir_path, "graph2.png"), plot = graphx2)
+
+
+```
+
+##Desde este gráfico, podemos observar que las mujeres muestran una percepción de cohesión barrial significativamente mayor que los hombres. Es importante tener en cuenta que la muestra está compuesta mayoritariamente por mujeres, lo cual influye en estos resultados. Sin embargo, al analizar los datos más detenidamente, podemos concluir que la percepción de la cohesión barrial no se ve influenciada por las diferencias de sexo y género. En otras palabras, la cohesión barrial se mantiene alta independientemente del sexo y género de los individuos.
+
+```{r}
+summary(proc_base$edad)
+
+get_label(proc_base$Edad)
+proc_base <- as.data.frame(proc_base)
+
+proc_base <- proc_base %>% 
+  mutate(edad_groups = case_when(Edad >=16 & Edad<=25 ~ "Entre 16 y 25 años",
+                                 Edad >=26 & Edad<=39 ~ "Entre 26 y 39 años",
+                                 Edad >=40 & Edad<=65 ~ "Entre 40 y 65 años",
+                                 Edad >65 ~ "Más de 65 años"))
+
+table(proc_base$edad_groups)
+```
+
+##ahora procesamos los datos con las 3 variables
+
+```{r}
+# Definir el valor numérico para cada categoría de cohesión barrial
+valores_cohesion_barrial <- c("Muy poca" = 1, "Poca" = 2, "Algo" = 3, "Bastante" = 4, "Mucha" = 5)
+
+# Transformar la variable cohesión barrial a numérica según los valores definidos
+proc_base <- proc_base %>%
+  mutate(cohesion_barrial_num = valores_cohesion_barrial[cohesion_barrial])
+
+# Calcular el promedio de cohesión barrial para cada combinación de educación, sexo y edad
+datos <- proc_base %>%
+  group_by(educacion, Sexo, edad_groups) %>%
+  summarise(promedio = mean(cohesion_barrial_num, na.rm = TRUE))
+
+# Crear un gráfico de puntos con diferentes colores y formas para cada sexo
+ggplot(datos, aes(x = educacion, y = promedio, color = Sexo, shape = Sexo)) +
+  geom_point(size = 3) +
+  labs(x = "Educación", y = "Promedio de cohesión barrial", color = "Sexo", shape = "Sexo") +
+  theme_bw() +
+  ylim(0, 5) +
+  facet_wrap(~edad_groups) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+##Como podemos observar, los datos continúan mostrando valores entre 3 y 4, lo que indica que en 2016, según esta encuesta y las variables seleccionadas, la población chilena percibía una cohesión social significativa. Los resultados se mantienen mayoritariamente en las categorías 'Algo' y 'Bastante', lo que refleja una capacidad considerable para asegurar el bienestar y minimizar disparidades, evitando la politización, tal como menciona Margarita Grenne. Además, las otras variables incorporadas para concebir la cohesión social corroboran estos hallazgos. Tanto el sexo, la edad y el nivel educativo influyen de manera transversal en la percepción de la cohesión social. Según los datos del Estudio Longitudinal Social de Chile, se observa una percepción sustantiva de la cohesión social. No obstante, debemos llevar estos resultados a la práctica desde las ciencias sociales, implementando políticas públicas que fortalezcan la confianza interpersonal, la seguridad, la integración y la satisfacción con el gobierno. Solo así podremos desarrollar políticas que mejoren la calidad de vida en la sociedad chilena. Sería igualmente relevante contrastar estos datos con información actual para entender cómo ha evolucionado esta percepción a lo largo del tiempo, considerando eventos significativos como el estallido social, la pandemia y los cambios políticos.
+
+[-@margaritagreene2023 , p.134]
+
+[https://juanignacioarratia.github.io/Examen/examen.html](#0){.uri style="font-size: 11pt;"}
 
 texto

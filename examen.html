@@ -253,7 +253,6 @@ div.csl-indent {
 <p>Como se puede apreciar, la base de datos contiene una amplia variedad de variables que pueden ser analizadas estadísticamente. Para investigar el sentimiento de pertenencia al barrio y la cohesión barrial, será necesario agrupar ciertas variables y crear una nueva base de datos con aquellas que nos interesan. El Estudio Longitudinal Social de Chile (Ola1 2016) ofrece diversas variables que nos permiten explorar la confianza interpersonal, la participación cívica y comunitaria, la percepción de pertenencia social, la cohesión entre los vecinos y la percepción de seguridad, todas ellas relevantes para este estudio.</p>
 <p>Para fortalecer el sentido de pertenencia y la cohesión barrial, es fundamental implementar políticas y programas que promuevan la participación comunitaria y el respeto mutuo. Las actividades culturales, deportivas y recreativas pueden ser excelentes herramientas para reunir a los residentes y fomentar la interacción social. Además, es importante crear espacios públicos accesibles y bien mantenidos, donde las personas puedan reunirse y disfrutar de su entorno. Fonseca (2020) sugieren que “la calidad de los espacios públicos y la percepción de seguridad son factores determinantes en la promoción del apego al lugar y la cohesión social”</p>
 <p><span class="citation" data-cites="moralesfonseca2020">(<a href="#ref-moralesfonseca2020" role="doc-biblioref">2020</a> , p.34)</span></p>
-<p>La comunicación efectiva también juega un papel crucial en la cohesión barrial. Establecer canales de comunicación abiertos y transparentes entre los residentes y las autoridades locales puede ayudar a resolver problemas de manera más eficiente y a construir confianza. Las reuniones comunitarias, los boletines informativos y las plataformas digitales pueden ser útiles para mantener a todos informados y comprometidos. Greene y Berrios (2023) destacan que “la comunicación efectiva y la participación activa de los residentes son esenciales para fortalecer el sentido de pertenencia y la cohesión en las comunidades urbanas”</p>
 <p>En consecuencia, se plantea como hipótesis que la cohesión barrial varía según el nivel educacional, el sexo y la edad de los residentes. Las variables existentes dentro de la base de datos son la confianza entre vecinos, la integración en el barrio, la seguridad en el barrio, la conectividad, la evaluación del barrio, la satisfacción con la democracia y, finalmente, la confianza en el gobierno. Pero solo se utilizarán las primeras tres mencionadas anteriormente.</p>
 <p>#seleccion de las variables</p>
 <div class="cell">
@@ -660,9 +659,307 @@ Mucha    |  23 |  1.74 |    1.85 | 100.00
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
 </div>
-<p><span class="citation" data-cites="margaritagreene2023">(<a href="#ref-margaritagreene2023" role="doc-biblioref">2023</a> , p.87)</span></p>
-<p>En conclusión, el sentimiento de pertenencia y la cohesión barrial son fundamentales para el bienestar de las comunidades. Fomentar estos elementos a través de políticas inclusivas, actividades comunitarias y una comunicación efectiva puede llevar a la creación de barrios más unidos y resilientes. Al fortalecer los lazos sociales y promover la colaboración, se construye una comunidad donde todos sus miembros pueden sentirse valorados, seguros y apoyados, mejorando así la calidad de vida de todos.</p>
-<p><a href="https://juanignacioarratia.github.io/Examen/examen.html" class="uri">https://juanignacioarratia.github.io/Examen/examen.html</a></p>
+<p>##Según lo que muestra el gráfico, más de 600 personas indican que existe una considerable cohesión barrial según las respuestas que dieron en el cuestionario de ElSOC (2016). Además, un poco menos de 600 personas creen que hay algo de cohesión barrial. Esto indica que, para el año 2016, había una alta percepción de cohesión barrial en la población chilena. Ahora, en función de lo planteado en la introducción, examinemos cómo varía la percepción de la cohesión barrial en relación con el nivel educacional, el sexo y/o la edad. Para ello, será necesario etiquetar estas variables y realizar tablas de análisis.</p>
+<p>#etiquetar variables</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Etiquetar</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> proc_base <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">"N_ed"</span><span class="ot">=</span>m01, <span class="co"># Nivel Educacional</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Sexo"</span><span class="ot">=</span>m0_sexo, <span class="co"># Sexo</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Edad"</span><span class="ot">=</span>m0_edad) <span class="co"># Edad</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>N_ed <span class="ot">&lt;-</span> <span class="fu">set_label</span>(<span class="at">x =</span> proc_base<span class="sc">$</span>N_ed,<span class="at">label =</span> <span class="st">"Nivel Educacional"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">get_label</span>(proc_base<span class="sc">$</span>N_ed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Nivel Educacional"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>Sexo <span class="ot">&lt;-</span> <span class="fu">set_label</span>(<span class="at">x =</span> proc_base<span class="sc">$</span>Sexo,<span class="at">label =</span> <span class="st">"Sexo"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_label</span>(proc_base<span class="sc">$</span>Sexo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Sexo"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>Edad <span class="ot">&lt;-</span> <span class="fu">set_label</span>(<span class="at">x =</span> proc_base<span class="sc">$</span>Edad,<span class="at">label =</span> <span class="st">"Edad"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_label</span>(proc_base<span class="sc">$</span>Edad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Edad"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>cohesion_barrial <span class="ot">&lt;-</span> <span class="fu">set_label</span>(<span class="at">x =</span> proc_base<span class="sc">$</span>cohesion_barrial,<span class="at">label =</span> <span class="st">"Cohesion barrial"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_label</span>(proc_base<span class="sc">$</span>cohesion_barrial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Cohesion barrial"</code></pre>
+</div>
+</div>
+<p>#Nivel educacional</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>N_ed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nivel Educacional (x) &lt;numeric&gt; 
+# total N=1324 valid N=1324 mean=4.96 sd=27.70
+
+Value |   N | Raw % | Valid % | Cum. %
+--------------------------------------
+ -999 |   1 |  0.08 |    0.08 |   0.08
+    1 |   9 |  0.68 |    0.68 |   0.76
+    2 |  92 |  6.95 |    6.95 |   7.70
+    3 |  96 |  7.25 |    7.25 |  14.95
+    4 | 173 | 13.07 |   13.07 |  28.02
+    5 | 385 | 29.08 |   29.08 |  57.10
+    6 |  61 |  4.61 |    4.61 |  61.71
+    7 | 197 | 14.88 |   14.88 |  76.59
+    8 | 105 |  7.93 |    7.93 |  84.52
+    9 | 170 | 12.84 |   12.84 |  97.36
+   10 |  35 |  2.64 |    2.64 | 100.00
+ &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>##La tabla arroja resultados con datos no codificados ni procesados para ello etiquetaremos los niveles educativos de la siguiente forma:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>N_ed <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(proc_base<span class="sc">$</span>N_ed, <span class="st">"c(1,2,3)=1; c(4,5)=2; c(6,7,8,9,10)=3"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>N_ed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nivel Educacional (x) &lt;numeric&gt; 
+# total N=1324 valid N=1324 mean=1.52 sd=27.53
+
+Value |   N | Raw % | Valid % | Cum. %
+--------------------------------------
+ -999 |   1 |  0.08 |    0.08 |   0.08
+    1 | 197 | 14.88 |   14.88 |  14.95
+    2 | 558 | 42.15 |   42.15 |  57.10
+    3 | 568 | 42.90 |   42.90 | 100.00
+ &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>###1 corresponderia a educacion basica, 2 a educacion media y 3 a educacion superior</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>N_ed <span class="ot">&lt;-</span> <span class="fu">factor</span>(proc_base<span class="sc">$</span>N_ed,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Educacion basica"</span>, <span class="st">"Educacion media"</span>, <span class="st">"Educacion superior"</span>),</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>N_ed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x &lt;categorical&gt; 
+# total N=1324 valid N=1323 mean=2.28 sd=0.71
+
+Value              |   N | Raw % | Valid % | Cum. %
+---------------------------------------------------
+Educacion basica   | 197 | 14.88 |   14.89 |  14.89
+Educacion media    | 558 | 42.15 |   42.18 |  57.07
+Educacion superior | 568 | 42.90 |   42.93 | 100.00
+&lt;NA&gt;               |   1 |  0.08 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>##De esta manera, podemos observar que solo un 14.88% de la muestra ha completado como máximo la educación básica, mientras que un 42.15% tiene educación media. Por último, un 42.90% ha alcanzado la educación superior.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> <span class="fu">rename</span>(proc_base,<span class="st">"educacion"</span><span class="ot">=</span>N_ed) <span class="co">#Cambiamos nombre a la variable</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sjt.xtab</span>(proc_base<span class="sc">$</span>cohesion_barrial, proc_base<span class="sc">$</span>educacion,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.col.prc=</span><span class="cn">TRUE</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.summary=</span><span class="cn">FALSE</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Cohesion barrial</td>
+<td colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">educacion</td>
+<td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">Educacion basica</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">Educacion media</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">Educacion superior</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Muy poca</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
+<span style="color:#339933;">0&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
+<span style="color:#339933;">0&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
+<span style="color:#339933;">0&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
+<span style="color:#339933;">0&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Poca</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">7</span><br>
+<span style="color:#339933;">4&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">28</span><br>
+<span style="color:#339933;">5.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">14</span><br>
+<span style="color:#339933;">2.6&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">49</span><br>
+<span style="color:#339933;">3.9&nbsp;%</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Algo</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">78</span><br>
+<span style="color:#339933;">44.6&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">256</span><br>
+<span style="color:#339933;">48.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">227</span><br>
+<span style="color:#339933;">41.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">561</span><br>
+<span style="color:#339933;">45.1&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Bastante</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">87</span><br>
+<span style="color:#339933;">49.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">233</span><br>
+<span style="color:#339933;">44.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">292</span><br>
+<span style="color:#339933;">53.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">612</span><br>
+<span style="color:#339933;">49.2&nbsp;%</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Mucha</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">3</span><br>
+<span style="color:#339933;">1.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">9</span><br>
+<span style="color:#339933;">1.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">11</span><br>
+<span style="color:#339933;">2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">23</span><br>
+<span style="color:#339933;">1.8&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">175</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">526</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">544</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1245</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>##Frente a estos datos, observamos que un 53.7% de quienes tienen educación superior creen que hay bastante cohesión barrial. De manera similar, un 48.7% de aquellos con educación media piensa que existe algo de cohesión barrial. Los porcentajes más bajos de percepción de poca o muy poca cohesión barrial se encuentran en todos los niveles educativos, oscilando entre un 2.6% y un 5.3%. Esto indica que la percepción de baja cohesión barrial es mínima en la muestra estudiada.</p>
+<p>A pesar de lo que muestra el gráfico, parece que el nivel educativo no influye significativamente en la percepción de cohesión barrial en el país. Los porcentajes se mantienen consistentes en cada segmento de cohesión barrial y nivel educativo, lo que sugiere que existe un alto grado de cohesión barrial independientemente del nivel educativo de la población. Esto señala que la cohesión barrial trasciende el ámbito educativo.</p>
+<p>La comunicación efectiva también desempeña un papel crucial en la cohesión barrial. Establecer canales de comunicación abiertos y transparentes entre los residentes y las autoridades locales puede facilitar la resolución de problemas de manera más eficiente y construir confianza. Las reuniones comunitarias, los boletines informativos y las plataformas digitales son recursos útiles para mantener a todos informados y comprometidos. Según Greene y Berrios (2023), “la comunicación efectiva y la participación activa de los residentes son fundamentales para fortalecer el sentido de pertenencia y la cohesión en las comunidades urbanas”, lo cual complementa la idea de que la comunicación adecuada promueve una mayor cohesión barrial.<span class="citation" data-cites="margaritagreene2023">(<a href="#ref-margaritagreene2023" role="doc-biblioref">2023</a> , p.87)</span></p>
+<p>##ahora segumos con la variable sexo y la varibale edad</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Etiquetamos</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>Sexo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sexo (x) &lt;numeric&gt; 
+# total N=1324 valid N=1324 mean=1.57 sd=0.49
+
+Value |   N | Raw % | Valid % | Cum. %
+--------------------------------------
+    1 | 566 | 42.75 |   42.75 |  42.75
+    2 | 758 | 57.25 |   57.25 | 100.00
+ &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>Sexo <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(proc_base<span class="sc">$</span>Sexo, <span class="st">"1=0;2=1"</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>Sexo <span class="ot">&lt;-</span> <span class="fu">factor</span>(proc_base<span class="sc">$</span>Sexo,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels=</span><span class="fu">c</span>( <span class="st">"Hombre"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"Mujer"</span>),</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">get_label</span>(proc_base<span class="sc">$</span>Sexo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>proc_base<span class="sc">$</span>Sexo <span class="ot">&lt;-</span> <span class="fu">set_label</span>(<span class="at">x =</span> proc_base<span class="sc">$</span>Sexo,<span class="at">label =</span> <span class="st">"Sexo"</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(proc_base<span class="sc">$</span>Sexo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sexo (x) &lt;categorical&gt; 
+# total N=1324 valid N=1324 mean=1.57 sd=0.49
+
+Value  |   N | Raw % | Valid % | Cum. %
+---------------------------------------
+Hombre | 566 | 42.75 |   42.75 |  42.75
+Mujer  | 758 | 57.25 |   57.25 | 100.00
+&lt;NA&gt;   |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>graphx2 <span class="ot">&lt;-</span> proc_base <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cohesion_barrial, <span class="at">fill =</span> Sexo)) <span class="sc">+</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Cohesión barrial"</span>) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cantidad"</span>) <span class="sc">+</span> </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">"Sexo"</span>)<span class="sc">+</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Hombre'</span>,<span class="st">'Mujer'</span>))</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co">#ver la gráfica </span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(graphx2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="examen_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar la gráfica</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">file.path</span>(dir_path, <span class="st">"graph2.png"</span>), <span class="at">plot =</span> graphx2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+<p>##Desde este gráfico, podemos observar que las mujeres muestran una percepción de cohesión barrial significativamente mayor que los hombres. Es importante tener en cuenta que la muestra está compuesta mayoritariamente por mujeres, lo cual influye en estos resultados. Sin embargo, al analizar los datos más detenidamente, podemos concluir que la percepción de la cohesión barrial no se ve influenciada por las diferencias de sexo y género. En otras palabras, la cohesión barrial se mantiene alta independientemente del sexo y género de los individuos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(proc_base<span class="sc">$</span>edad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Length  Class   Mode 
+     0   NULL   NULL </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_label</span>(proc_base<span class="sc">$</span>Edad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Edad"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(proc_base)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> proc_base <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">edad_groups =</span> <span class="fu">case_when</span>(Edad <span class="sc">&gt;=</span><span class="dv">16</span> <span class="sc">&amp;</span> Edad<span class="sc">&lt;=</span><span class="dv">25</span> <span class="sc">~</span> <span class="st">"Entre 16 y 25 años"</span>,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>                                 Edad <span class="sc">&gt;=</span><span class="dv">26</span> <span class="sc">&amp;</span> Edad<span class="sc">&lt;=</span><span class="dv">39</span> <span class="sc">~</span> <span class="st">"Entre 26 y 39 años"</span>,</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>                                 Edad <span class="sc">&gt;=</span><span class="dv">40</span> <span class="sc">&amp;</span> Edad<span class="sc">&lt;=</span><span class="dv">65</span> <span class="sc">~</span> <span class="st">"Entre 40 y 65 años"</span>,</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>                                 Edad <span class="sc">&gt;</span><span class="dv">65</span> <span class="sc">~</span> <span class="st">"Más de 65 años"</span>))</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(proc_base<span class="sc">$</span>edad_groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Entre 16 y 25 años Entre 26 y 39 años Entre 40 y 65 años     Más de 65 años 
+               169                399                658                 98 </code></pre>
+</div>
+</div>
+<p>##ahora procesamos los datos con las 3 variables</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir el valor numérico para cada categoría de cohesión barrial</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>valores_cohesion_barrial <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Muy poca"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Poca"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Algo"</span> <span class="ot">=</span> <span class="dv">3</span>, <span class="st">"Bastante"</span> <span class="ot">=</span> <span class="dv">4</span>, <span class="st">"Mucha"</span> <span class="ot">=</span> <span class="dv">5</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformar la variable cohesión barrial a numérica según los valores definidos</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>proc_base <span class="ot">&lt;-</span> proc_base <span class="sc">%&gt;%</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cohesion_barrial_num =</span> valores_cohesion_barrial[cohesion_barrial])</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular el promedio de cohesión barrial para cada combinación de educación, sexo y edad</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> proc_base <span class="sc">%&gt;%</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(educacion, Sexo, edad_groups) <span class="sc">%&gt;%</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">promedio =</span> <span class="fu">mean</span>(cohesion_barrial_num, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'educacion', 'Sexo'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un gráfico de puntos con diferentes colores y formas para cada sexo</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> educacion, <span class="at">y =</span> promedio, <span class="at">color =</span> Sexo, <span class="at">shape =</span> Sexo)) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Educación"</span>, <span class="at">y =</span> <span class="st">"Promedio de cohesión barrial"</span>, <span class="at">color =</span> <span class="st">"Sexo"</span>, <span class="at">shape =</span> <span class="st">"Sexo"</span>) <span class="sc">+</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>edad_groups) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="examen_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>##Como podemos observar, los datos continúan mostrando valores entre 3 y 4, lo que indica que en 2016, según esta encuesta y las variables seleccionadas, la población chilena percibía una cohesión social significativa. Los resultados se mantienen mayoritariamente en las categorías ‘Algo’ y ‘Bastante’, lo que refleja una capacidad considerable para asegurar el bienestar y minimizar disparidades, evitando la politización, tal como menciona Margarita Grenne. Además, las otras variables incorporadas para concebir la cohesión social corroboran estos hallazgos. Tanto el sexo, la edad y el nivel educativo influyen de manera transversal en la percepción de la cohesión social. Según los datos del Estudio Longitudinal Social de Chile, se observa una percepción sustantiva de la cohesión social. No obstante, debemos llevar estos resultados a la práctica desde las ciencias sociales, implementando políticas públicas que fortalezcan la confianza interpersonal, la seguridad, la integración y la satisfacción con el gobierno. Solo así podremos desarrollar políticas que mejoren la calidad de vida en la sociedad chilena. Sería igualmente relevante contrastar estos datos con información actual para entender cómo ha evolucionado esta percepción a lo largo del tiempo, considerando eventos significativos como el estallido social, la pandemia y los cambios políticos.</p>
+<p><span class="citation" data-cites="margaritagreene2023">(<a href="#ref-margaritagreene2023" role="doc-biblioref">2023</a> , p.134)</span></p>
+<p><a href="#0" class="uri" style="font-size: 11pt;">https://juanignacioarratia.github.io/Examen/examen.html</a></p>
 <p>texto</p>
 
 </section>
