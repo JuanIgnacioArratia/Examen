@@ -163,6 +163,10 @@ if (!dir.exists(dir_path)) {
   dir.create(dir_path)
 }
 
+#ver la gráfica 
+print(graphx1)
+
+
 # Guardar la gráfica
 ggsave(filename = file.path(dir_path, "graph1.png"), plot = graphx1)
 ```
